@@ -1,0 +1,77 @@
+ \documentclass[%
+ aps,
+ prl,%
+ amsmath,amssymb,
+%preprint,%
+ reprint,%
+%author-year,%
+%author-numerical,%
+]{revtex4-1}
+
+\usepackage{graphicx}% Include figure files
+\usepackage{dcolumn}% Align table columns on decimal point
+\usepackage{bm}% bold math
+%My packages start
+%\usepackage{subfig}
+\usepackage{multirow}					
+\usepackage{array}
+%\usepackage{booktabs}
+\usepackage{footnote} 
+\newcommand{\angstrom}{\text{\normalfont\AA}}
+\usepackage{booktabs}
+\usepackage{float}
+
+\usepackage{color}
+\newcommand{\comment}[1]{\noindent \textcolor{blue}{#1}}
+%My packages end
+%\usepackage[mathlines]{lineno}% Enable numbering of text and display math
+%\linenumbers\relax % Commence numbering lines
+
+\begin{document}
+
+\title[]{Cluster regularization}% Force line breaks with \\
+
+\author{K.\ H.\ S{\o}rensen}
+\author{M.\ S.\ J{\o}rgensen ??}
+\author{B.\ Hammer}
+\email{hammer@phys.au.dk}
+\affiliation{ 
+Department of Physics and Astronomy, and Interdisciplinary Nanoscience Center (iNANO), Aarhus University, Denmark.
+}
+% \homepage{phys.au.dk}
+ 
+\date{\today}% It is always \today, today,
+             %  but any date may be explicitly specified
+
+\begin{abstract}
+\end{abstract}
+
+\pacs{Valid PACS appear here}% PACS, the Physics and Astronomy
+                             % Classification Scheme.
+\keywords{}%Use showkeys class option if keyword
+                              %display desired
+\maketitle
+
+\section{\label{sec:introduction}Introduction}
+Density functional theory (DFT) has proven successful as the
+interaction potential underlying structural searches in computational
+materials science. Examples where DFT in combination with experimental information
+has provided structural information are abundant in materials science, in particular
+for large surface reconstructions, including the SiC(111)-(3$\times$3) surface reconstruction \cite{Starke1998}, the Pd(100)-($\sqrt{5}\times \sqrt{5}$)R27$^o$-O surface oxide \cite{Todorova2003}, the Al$_2$O$_3$/NiAl oxide film \cite{Kresse2005}, and the
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1.0\columnwidth]{SnO_individual.pdf}
+    \caption{Atoms }
+    \label{fig:fig1}
+\end{figure}
+
+
+We acknowledge support from the Danish Research Council (grant no. 0602-02566B) and from VILLUM FONDEN (Investigator grant, project no. 16562).
+
+\begin{thebibliography}{12}  
+	\bibitem{Starke1998}U. Starke \textit{et al}., Phys. Rev. Lett. \textbf{80}, 758 (1998).    
+\end{thebibliography}
+
+
+\end{document}
