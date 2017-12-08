@@ -20,7 +20,7 @@
 \newcommand{\angstrom}{\text{\normalfont\AA}}
 \usepackage{booktabs}
 \usepackage{float}
-
+\usepackage{mathtools}
 \usepackage{color}
 \newcommand{\comment}[1]{\noindent \textcolor{blue}{#1}}
 %My packages end
@@ -68,12 +68,20 @@ The length of our feature vector is the number of atomic types plus one. For our
 
 The first 2 components for each atom $i$, is calculated by finding the list of neighbors $nl(i)$ within a cutoff radius $c$. Then for each of the 2 atomic type T we calculate. 
 
-$$ f_T(i) = \sum_{j \in nl(i,c);T=T(j)} \exp(-r_{ij}/1\text{\AA})(\cos(\pi*r_{ij}/c)+1)/2 $$
+\begin{equation}
+f_T(i) = \sum_{\mathclap{j \in nl(i,c);T=T(j)}} e^{-r_{ij}/1\text{\AA}}f_c(r_{ij})  \label{eq1}
+\end{equation}
 
-Here T(j) is the atomic number of the j'th atom. $r_{ij}$ is the distance from the i'th to the j'th atom in {\AA}ngstr\"{o}m. The last component of the atomic feature vector is $T(i)$ the atomic number for atom i. 
+Here T(j) is the atomic) number of the j'th atom. $r_{ij}$ is the distance from the i'th to the j'th atom in {\AA}ngstr\"{o}m. The last component of the atomic feature vector is $T(i)$ the atomic number for atom i. 
+The function $f_c$ make sure that an atoms contribution vanish at the cut-off radius, this gives the gradient higher stability.
+
+\begin{equation}
+f_c(r)={{\cos(\pi*r/c)+1}\over 2}
+\end{equation}
+
+
+
 In figure \ref{fig:fig1} the feature vector is displayed for 1019 structurs of Ti$_{13}$O$_{26}$ with the first component $f_8(i)$ along the x-axis, the second $f_{22}(i)$ along the y-axis and the color is given by the third component $T(i)$. 
-
-
 
 
 \begin{figure}[h]
@@ -85,7 +93,13 @@ In figure \ref{fig:fig1} the feature vector is displayed for 1019 structurs of T
 
 
 \section{Clustering}
-The clustering method used is this study is k-means with 2 modifications. The first is a modification to avoid generating empty clusters \cite{Malay2009} and the second modification is using k-means++ cluster initialization. While working with clustering on the atomic feature vectors, the cluster distance vs. energy correlation illustrated on figure \ref{fig:fig2} was discovered and it was recognized that it could be applied to speed minimum energy structure search.   
+The clustering method used is this study is k-means with 2
+modifications. The first is a modification to avoid generating empty
+clusters \cite{Malay2009} and the second modification is using
+k-means++ cluster initialization. While working with clustering on the
+atomic feature vectors, the cluster distance vs. energy correlation
+illustrated on figure \ref{fig:fig2} was discovered and it was
+recognized that it could be applied to speed up minimum energy structure search.   
 
 
 
