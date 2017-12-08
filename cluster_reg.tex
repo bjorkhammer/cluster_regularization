@@ -62,7 +62,7 @@ for large surface reconstructions, including the SiC(111)-(3$\times$3) surface r
 
 \section{Atomic features}
  
-The atomic features vectors used in this study is inspried from Botu and Ramprasad \cite{Boto2015} and also used by Xi Chen \cite{Chen2017}.
+The atomic features vectors used in this study is inspried from Botu and Ramprasad \cite{Boto2015} and also used by Xin Chen \cite{Chen2017}.
 
 The length of our feature vector is the number of atomic types plus one. For our system with 2 atomic types the atomic feature vector have length 3.
 
@@ -97,10 +97,24 @@ The clustering method used is this study is k-means with 2
 modifications. The first is a modification to avoid generating empty
 clusters \cite{Malay2009} and the second modification is using
 k-means++ cluster initialization. While working with clustering on the
-atomic feature vectors, the cluster distance vs. energy correlation
-illustrated on figure \ref{fig:fig2} was discovered and it was
-recognized that it could be applied to speed up minimum energy structure search.   
+atomic feature vectors, the total cluster distance vs. energy correlation
+illustrated on figure \ref{fig:fig2} was discovered. It was immeddiately recognized 
+that it could be applied to speed up minimum energy structure search.
 
+
+
+
+
+Given an atomis structure $S$ (a list of atoms) the total cluster distance is given by:
+\begin{equation}
+\text{TCD}(S) = \sum_{a \in S} d(\vec f(a), \vec c(\vec f(a))) \label{eq3}
+\end{equation}
+For each atom $a$ in $S$ we calculate the feature vector $\vec f(a)$ then 
+assign it to a cluster center $\vec c(\vec f(a))$.   
+The sum over the distance between $\vec f(a)$ and $\vec c(\vec f(a))$ for all atoms $a$ in a structure $S$ 
+gives the totel cluster distance for the structure $TCD(S)$.
+In the case of figure \ref{fig2} the cluster centers is found by clustering over all atomic featurevectors 
+in our 1019 structures in the dataset. 
 
 
 \begin{figure}[h]
