@@ -66,7 +66,7 @@ The atomic features vectors used in this study is inspried from Botu and Rampras
 
 The length of our feature vector is the number of atomic types plus one. For our system with 2 atomic types the atomic feature vector have length 3.
 
-The first 2 components for each atom $i$, is calculated by finding the list of neighbors $nl(i)$ within a cutoff radius $c$. Then for each of the 2 atomic type T we calculate. 
+The first 2 components for each atom $i$, is calculated by finding the list of neighbors $nl(i)$ within a cutoff radius $c$. For each of the 2 atomic types T we calculate. 
 
 \begin{equation}
 f_T(i) = \sum_{\mathclap{j \in nl(i,c);T=T(j)}} e^{-r_{ij}/1\text{\AA}}f_c(r_{ij})  \label{eq1}
@@ -81,14 +81,14 @@ f_c(r)={{\cos(\pi*r/c)+1}\over 2}
 
 
 
-In figure \ref{fig:fig1} the feature vector is displayed for 1019 structurs of Ti$_{13}$O$_{26}$ with the first component $f_8(i)$ along the x-axis, the second $f_{22}(i)$ along the y-axis and the color is given by the third component $T(i)$. 
+In figure \ref{fig1} the feature vector is displayed for 1019 structurs of Ti$_{13}$O$_{26}$ with the first component $f_8(i)$ along the x-axis, the second $f_{22}(i)$ along the y-axis and the color is given by the third component $T(i)$. 
 
 
 \begin{figure}[h]
     \centering
     \includegraphics[width=1.0\columnwidth]{fig1-scatterplot.pdf}
     \caption{Visualization of atoms from 1019 Ti$_{13}$O$_{26}$ structures in feature space}
-    \label{fig:fig1}
+    \label{fig1}
 \end{figure}
 
 
@@ -98,49 +98,62 @@ modifications. The first is a modification to avoid generating empty
 clusters \cite{Malay2009} and the second modification is using
 k-means++ cluster initialization. While working with clustering on the
 atomic feature vectors, the total cluster distance vs. energy correlation
-illustrated on figure \ref{fig:fig2} was discovered. It was immeddiately recognized 
-that it could be applied to speed up minimum energy structure search.
-
-
-
-
-
-Given an atomis structure $S$ (a list of atoms) the total cluster distance is given by:
-\begin{equation}
-\text{TCD}(S) = \sum_{a \in S} d(\vec f(a), \vec c(\vec f(a))) \label{eq3}
-\end{equation}
-For each atom $a$ in $S$ we calculate the feature vector $\vec f(a)$ then 
-assign it to a cluster center $\vec c(\vec f(a))$.   
-The sum over the distance between $\vec f(a)$ and $\vec c(\vec f(a))$ for all atoms $a$ in a structure $S$ 
-gives the totel cluster distance for the structure $TCD(S)$.
-In the case of figure \ref{fig2} the cluster centers is found by clustering over all atomic featurevectors 
-in our 1019 structures in the dataset. 
-
+illustrated on figure \ref{fig_corr} was discovered. 
 
 \begin{figure}[h]
     \centering
     \includegraphics[width=1.0\columnwidth]{decoorL2_5_fgen_Ti13O26Ridge_9_11_9_1510066208.pdf}
     \caption{Cluster distance vs. energy correlation}
-    \label{fig:fig2}
+    \label{fig_corr}
 \end{figure}
 
 
+It was immeddiately recognized that it could be applied to speed up minimum energy structure search.
 
+Given an atomic structure $S$ (a list of atoms) the total cluster distance is given by:
+\begin{equation}
+\text{TCD}(S) = \sum_{i \in S} d(\vec f(i), \vec c(\vec f(i))) \label{eq3}
+\end{equation}
+For each atom $i$ in $S$ we calculate the feature vector $\vec f(i)$ then 
+assign it to a cluster center $\vec c(\vec f(i))$.   
+The sum over the distance between $\vec f(i)$ and $\vec c(\vec f(i))$ for all atoms $i$ in a structure $S$ 
+gives the totel cluster distance for the structure $TCD(S)$.
+In the case of figure \ref{fig_corr} the cluster centers is found by clustering over all atomic feature vectors 
+for the 1019 structures in the dataset. 
 
+\section{Cluster regularization}
+
+Because the first components of our feature vector is analytical functions of the atomic coordinates, one can derive the analytical gradiant. Now we can minimize the cluster distance by following the negative gradient to a local minina. Then we switch and minimize the energy with DFTB+ and then minimize cluster distance again. Figure \ref{fig_min} shows the proces. The idea is that alternate the two minimizations they will help eachother out of there local minimas and futher down in energy and cluster distance.
+   
 \begin{figure}[h]
     \centering
     \includegraphics[width=2.0\columnwidth]{acdminplot_74_98_ridgemin2_5_9_500_Ti13O26Ridge.pdf}
-    \caption{Combined minimization}
-    \label{fig:fig3}
+    \caption{Green lines and arrows shows a cluster distance (cd) minimization and the blue DFTB+ relazations. Here the first/bottom layer is the template. While it is hard to see progres in induvidual minimazion step there is small details to notice on the plot. Notice that in the cd. step from 16 to 17 the hole in the secound layer is filled and that in the cd. step from 18 to 19 the 2 oxygens in top left corner is split up.}
+    \label{fig_min}
 \end{figure}
 
+\section{Test setup}
 
-\section{Search results}
+To test the technique we implemented cluster regularization as a mutation operator in ASE's genetic algoritme (ga)\cite{ase_ga} framework. 
+The mutation operator takes a list of parents and the execute the following steps:
+\begin{enumerate}
+\item Calculate atomic features for all parents.
+\item Cluster them and find cluster centers.
+\item Copy the lowest energy parent to the child
+\item minimize cluster distance of child.
+\item return child.
+\end{enumerate}
+When the mutation returns the child then the ga will make a energy relaxation 
+and we have a cycle as illustrated in figure \ref{fig_min}.
+
+
+\section{Test result}
+
 
 \begin{figure}[h]
     \centering
     \includegraphics[width=1.0\columnwidth]{2lsuccess.pdf}
-    \caption{Cumulative sussess for 2 layer system}
+    \caption{Cumulative success for 2 layer system}
     \label{fig:fig4}
 \end{figure}
 
@@ -148,7 +161,7 @@ in our 1019 structures in the dataset.
 \begin{figure}[h]
     \centering
     \includegraphics[width=1.0\columnwidth]{3lsuccess.pdf}
-    \caption{Cumulative sussess for 3 layer system}
+    \caption{Cumulative success for 3 layer system}
     \label{fig:fig5}
 \end{figure}
 
@@ -156,7 +169,7 @@ in our 1019 structures in the dataset.
 \begin{figure}[h]
     \centering
     \includegraphics[width=1.0\columnwidth]{4lsuccess.pdf}
-    \caption{Cumulative sussess for 4 layer system}
+    \caption{Cumulative success for 4 layer system}
     \label{fig:fig6}
 \end{figure}
 
