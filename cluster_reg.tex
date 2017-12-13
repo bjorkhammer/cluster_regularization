@@ -62,7 +62,7 @@ for large surface reconstructions, including the SiC(111)-(3$\times$3) surface r
 
 \section{Atomic features}
  
-The atomic features vectors used in this study is inspried from Botu and Ramprasad \cite{Boto2015} and also used by Xin Chen \cite{Chen2017}.
+The atomic features vectors used in this study is inspired from Botu and Ramprasad \cite{Boto2015} and also used by Xin Chen \cite{Chen2017}.
 
 The length of our feature vector is the number of atomic types plus one. For our system with 2 atomic types the atomic feature vector have length 3.
 
@@ -72,7 +72,7 @@ The first 2 components for each atom $i$, is calculated by finding the list of n
 f_T(i) = \sum_{\mathclap{j \in nl(i,c);T=T(j)}} e^{-r_{ij}/1\text{\AA}}f_c(r_{ij})  \label{eq1}
 \end{equation}
 
-Here T(j) is the atomic) number of the j'th atom. $r_{ij}$ is the distance from the i'th to the j'th atom in {\AA}ngstr\"{o}m. The last component of the atomic feature vector is $T(i)$ the atomic number for atom i. 
+Here T(j) is the atomic number of the j'th atom. $r_{ij}$ is the distance from the i'th to the j'th atom in {\AA}ngstr\"{o}m. The last component of the atomic feature vector is $T(i)$ the atomic number for atom i. 
 The function $f_c$ make sure that an atoms contribution vanish at the cut-off radius, this gives the gradient higher stability.
 
 \begin{equation}
@@ -81,7 +81,7 @@ f_c(r)={{\cos(\pi*r/c)+1}\over 2}
 
 
 
-In figure \ref{fig1} the feature vector is displayed for 1019 structurs of Ti$_{13}$O$_{26}$ with the first component $f_8(i)$ along the x-axis, the second $f_{22}(i)$ along the y-axis and the color is given by the third component $T(i)$. 
+In figure \ref{fig1} the feature vector is displayed for 1019 structures of Ti$_{13}$O$_{26}$ with the first component $f_8(i)$ along the x-axis, the second $f_{22}(i)$ along the y-axis and the color is given by the third component $T(i)$. 
 
 
 \begin{figure}[h]
@@ -108,7 +108,7 @@ illustrated on figure \ref{fig_corr} was discovered.
 \end{figure}
 
 
-It was immeddiately recognized that it could be applied to speed up minimum energy structure search.
+It was immediately recognized that it could be applied to speed up minimum energy structure search.
 
 Given an atomic structure $S$ (a list of atoms) the total cluster distance is given by:
 \begin{equation}
@@ -117,24 +117,24 @@ Given an atomic structure $S$ (a list of atoms) the total cluster distance is gi
 For each atom $i$ in $S$ we calculate the feature vector $\vec f(i)$ then 
 assign it to a cluster center $\vec c(\vec f(i))$.   
 The sum over the distance between $\vec f(i)$ and $\vec c(\vec f(i))$ for all atoms $i$ in a structure $S$ 
-gives the totel cluster distance for the structure $TCD(S)$.
+gives the total cluster distance for the structure $TCD(S)$.
 In the case of figure \ref{fig_corr} the cluster centers is found by clustering over all atomic feature vectors 
-for the 1019 structures in the dataset. 
+for the 1019 structures in the data set. 
 
 \section{Cluster regularization}
 
-Because the first components of our feature vector is analytical functions of the atomic coordinates, one can derive the analytical gradiant. Now we can minimize the cluster distance by following the negative gradient to a local minina. Then we switch and minimize the energy with DFTB+ and then minimize cluster distance again. Figure \ref{fig_min} shows the proces. The idea is that alternate the two minimizations they will help eachother out of there local minimas and futher down in energy and cluster distance.
+Because the first components of our feature vector is analytical functions of the atomic coordinates, one can derive the analytical gradient. Now we can minimize the cluster distance by following the negative gradient to a local minima. Then we switch and minimize the energy with DFTB+ and then minimize cluster distance again. Figure \ref{fig_min} shows the process. The idea is that alternate the two minimizations they will help each other out of there local minimas and further down in energy and cluster distance.
    
 \begin{figure}[h]
     \centering
     \includegraphics[width=2.0\columnwidth]{acdminplot_74_98_ridgemin2_5_9_500_Ti13O26Ridge.pdf}
-    \caption{Green lines and arrows shows a cluster distance (cd) minimization and the blue DFTB+ relazations. Here the first/bottom layer is the template. While it is hard to see progres in induvidual minimazion step there is small details to notice on the plot. Notice that in the cd. step from 16 to 17 the hole in the secound layer is filled and that in the cd. step from 18 to 19 the 2 oxygens in top left corner is split up.}
+    \caption{Green lines and arrows shows a cluster distance (cd) minimization and the blue DFTB+ relaxations. Here the first/bottom layer is the template. While it is hard to see progress in individual minimization step there is small details to notice on the plot. Notice that in the cd. step from 16 to 17 the hole in the second layer is filled and that in the cd. step from 18 to 19 the 2 oxygens in top left corner is split up.}
     \label{fig_min}
 \end{figure}
 
 \section{Test setup}
 
-To test the technique we implemented cluster regularization as a mutation operator in ASE's genetic algoritme (ga)\cite{ase_ga} framework. 
+To test the technique we implemented cluster regularization as a mutation operator in ASE's genetic algorithm (ga)\cite{ase_ga} framework. 
 The mutation operator takes a list of parents and the execute the following steps:
 \begin{enumerate}
 \item Calculate atomic features for all parents.
@@ -146,33 +146,44 @@ The mutation operator takes a list of parents and the execute the following step
 When the mutation returns the child then the ga will make a energy relaxation 
 and we have a cycle as illustrated in figure \ref{fig_min}.
 
+To establish a benchmark the ga with bayesian hyperparameter optimization (bho) search was run on the 3 layer system.
+Run with cut\&splice, permutation and rattle mutations the search found the optimal ratios was 59\% cut\&splice, 0\% permutation, 41\% rattle. 
+
+Next we did a bho search for the best parameters for cluster regularization, we found that 5 clusters, 3 parents and cutoff radius c=11.9 gave the best results.
+
+Last we did a bho search for the best combination of cluster regularization, cut\&splice and rattle, we found that 70\% cluster regularization, 28\% cut\&splice and 2\% rattle did well.
+
+We tested these 3 configuration on a 2 layer, 3 layer and a 4 layers system. 
 
 \section{Test result}
 
+On figure \ref{2lfig} we see that pure cluster reg. (orange curve) start finding minimum structure much faster than the benchmark (yellow curve) , but it levels out around 60-70\%. The problem is that cluster regulation and energy minimization have local minimas close to each other and running the algorithm make them switch between this minimas. When cluster regulation is mix with other mutations (red cure) the problem disappear. 
 
 \begin{figure}[h]
     \centering
     \includegraphics[width=1.0\columnwidth]{2lsuccess.pdf}
     \caption{Cumulative success for 2 layer system}
-    \label{fig:fig4}
+    \label{2lfig}
 \end{figure}
 
+With the 3 layers system on figure \ref{3lfig} the problem isn't as prominent which might be because there is more free variables in this problems. Else we observe the same as the 2 layer system combined and pure cluster reg. does better than benchmark. Pure cluster reg. does better in the start but is overtaken by the combined method later on. 
+ 
 
 \begin{figure}[h]
     \centering
     \includegraphics[width=1.0\columnwidth]{3lsuccess.pdf}
     \caption{Cumulative success for 3 layer system}
-    \label{fig:fig5}
+    \label{3lfig}
 \end{figure}
 
+In the 4 layer system the tendency continues but the success rate is much lower and we made double as many runs to shrink the confidence intervals. 
 
 \begin{figure}[h]
     \centering
     \includegraphics[width=1.0\columnwidth]{4lsuccess.pdf}
     \caption{Cumulative success for 4 layer system}
-    \label{fig:fig6}
+    \label{4lfig}
 \end{figure}
-
 
 
 We acknowledge support from the Danish Research Council (grant no. 0602-02566B) and from VILLUM FONDEN (Investigator grant, project no. 16562).
