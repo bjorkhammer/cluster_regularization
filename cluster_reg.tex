@@ -58,19 +58,23 @@ The method was implemented as a mutation operator for the genetic search algorit
 \maketitle
 
 \section{\label{sec:introduction}Introduction}
+Searching the potential energy surface for the minimum energy structure 
+
+
 Evolutionary algorithms is frequently use in search for stable atomic structures and potential energy surfaces.
+
+
 
 \section{The method}
 What we are contributing in this article is a method we call cluster regularization. 
-It is a way to impose symmetry into the search with out specifying the symmetry explicit, 
+It is a way to impose symmetry into the search without specifying the symmetry explicit, 
 as pointed out in \cite{Pikard2011} low energy structures tend to have a very high degree of symmetry.
 
-The method first constructing a feature vector for each atom, then cluster this feature vectors, and at last change the atomic positions such that the distance between the feature vectors and the cluster centers are minimized.   
-
+The method first constructing a feature vector for each atom, then cluster this feature vectors, and at last update the atomic positions such that the distance between the feature vectors and the cluster centers are minimized.   
 
 \subsection{Atomic features}
  
-The atomic features vectors used in this study is inspired from Botu and Ramprasad \cite{Boto2015} and also used by Xin Chen \cite{Chen2017}.
+The atomic features vectors used in this study is inspired from Botu and Ramprasad \cite{Botu2015} and also used by Xin Chen \cite{Chen2017}.
 
 The length of our feature vector is the number of atomic types plus one. For our system with 2 atomic types the atomic feature vector have length 3.
 
@@ -167,9 +171,9 @@ Last we did a bho search for the best combination of cluster regularization, cut
 
 We tested these 3 configuration on a 2 layer, 3 layer and a 4 layers system. 
 
-\section{Test result}
+\subsection{Test result}
 
-On figure \ref{2lfig} we see that pure cluster reg. (orange curve) start finding minimum structure much faster than the benchmark (yellow curve) , but it levels out around 60-70\%. The problem is that cluster regularization and energy minimization have local minima close to each other and running the algorithm make them switch between this minima. When cluster regularization is mix with other mutations (red cure) the problem disappear. 
+On figure \ref{2lfig} we see that pure cluster reg. (orange curve) start finding minimum structure much faster than the benchmark (yellow curve) , but it levels out around 60-70\%. The problem is that cluster regularization and energy minimization have local minima close to each other and running the algorithm make them switch between this minima. When cluster regularization is mix with other mutations (red curve) the problem disappear. 
 
 \begin{figure}[h]
     \centering
@@ -178,7 +182,7 @@ On figure \ref{2lfig} we see that pure cluster reg. (orange curve) start finding
     \label{2lfig}
 \end{figure}
 
-With the 3 layers system on figure \ref{3lfig} the problem isn't as prominent which might be because there is more free variables in this problems. Else we observe the same as the 2 layer system combined and pure cluster reg. does better than benchmark. Pure cluster reg. does better in the start but is overtaken by the combined method later on. 
+With the 3 layers system on figure \ref{3lfig} the problem isn't as prominent which might be because there is more free variables in this problems. Else we observe the same as the 2 layer system combined and pure cluster reg. does better than the benchmark. Pure cluster reg. does better in the start but is overtaken by the combined method later on. 
  
 
 \begin{figure}[h]
@@ -197,14 +201,21 @@ In the 4 layer system the tendency continues but the success rate is much lower 
     \label{4lfig}
 \end{figure}
 
+\section{Analysis}
+
+\section{Conclusion}
+
+
 
 We acknowledge support from the Danish Research Council (grant no. 0602-02566B) and from VILLUM FONDEN (Investigator grant, project no. 16562).
 
 \begin{thebibliography}{12}  
-  \bibitem{Starke1998} U. Starke \textit{et al}., Phys. Rev. Lett. \textbf{80}, 758 (1998).    
-  \bibitem{Botu2015} {Adaptive Machine Learning Framework to Accelerate Ab Initio Molecular Dynamics.} V. Botu and R. Ramprasad, Int. J. Quantum Chem. 2015, 115 ,1075-18083. DOI:10.1002/qua.24836    
- \bibitem{Malay2009} {A Modified k-means Algorithm to Avoid Empty Clusters} Malay K. Pakhira, International Journal of Recent Trends in Engineering, Vol 1, No 1, May 2009
- \end{thebibliography}
+\bibitem{Starke1998} U. Starke \textit{et al}., Phys. Rev. Lett. \textbf{80}, 758 (1998).    
+\bibitem{Malay2009} {A Modified k-means Algorithm to Avoid Empty Clusters} Malay K. Pakhira, International Journal of Recent Trends in Engineering, Vol 1, No 1, May 2009
+\bibitem{Pikard2011}  {Ab initio random structure searching} Chris J. Pickard and R. J. Needs. J. Phys.: Condens. Matter \textbf{23} (2011) 053201 (23pp) DOI:10.1088/0953-8984/23/5/053201
+\bibitem{Botu2015} {Adaptive Machine Learning Framework to Accelerate Ab Initio Molecular Dynamics.} V. Botu and R. Ramprasad, Int. J. Quantum Chem. 2015, 115 ,1075-18083. DOI:10.1002/qua.24836    
+\bibitem{Chen2017} {Understanding atomic chemistry with machine learning.} Chen, X., Jørgenson, M. S., Hammer, B., \& Li, J. (2017) Unpublished
+\end{thebibliography}
 
 
 \end{document}
