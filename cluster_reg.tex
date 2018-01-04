@@ -61,7 +61,15 @@ The method was implemented as a mutation operator for the genetic search algorit
 Searching the potential energy surface for the minimum energy structure 
 
 
-Evolutionary algorithms is frequently use in search for stable atomic structures and potential energy surfaces.
+Evolutionary algorithms are frequently use in search for stable atomic structures and potential energy surfaces.
+
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1.0\columnwidth]{fig1-intro.pdf}
+    \caption{Example of the structures we are working with. Top-left the slab used, top-right a initial structure, bottom-left a structures with some minimisation, bottom-right the global mimimum.}
+    \label{figintro}
+\end{figure}
 
 
 
@@ -92,15 +100,14 @@ f_c(r)={{\cos(\pi*r/c)+1}\over 2}
 \end{equation}
 
 
-
-In figure \ref{fig1} the feature vector is displayed for 1019 structures of Ti$_{13}$O$_{26}$ with the first component $f_8(i)$ along the x-axis, the second $f_{22}(i)$ along the y-axis and the color is given by the third component $T(i)$. 
+In figure \ref{figfeature} the feature vector is displayed for 1019 structures of Ti$_{13}$O$_{26}$ with the first component $f_8(i)$ along the x-axis, the second $f_{22}(i)$ along the y-axis and the color is given by the third component $T(i)$. 
 
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=1.0\columnwidth]{fig1-scatterplot.pdf}
-    \caption{Visualization of atoms from 1019 Ti$_{13}$O$_{26}$ structures in feature space}
-    \label{fig1}
+    \includegraphics[width=1.0\columnwidth]{fig2-scatterplot.pdf}
+    \caption{Visualization of atoms from 1019 Ti$_{13}$O$_{26}$ structures in feature space}   
+    \label{figfeature}
 \end{figure}
 
 
