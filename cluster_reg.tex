@@ -155,10 +155,6 @@ for the 1019 structures in the data set.
 
 \subsection{Cluster regularization}
 Because the all but the last components of our feature vector is analytical functions of the atomic coordinates, one can derive the analytical gradient. 
-\begin{equation}
-\nabla_{\vec r_i} \text{TCD}(S) = \sum_{i \in S} {\vec f(i) - \vec c_i \over 2 d(\vec f(i), \vec c_i)} \sum_{j \in nl(i)} e^{-d_{ij}/1\text{\AA}} {\vec r_i-\vec r_j \over d_{ij}}
- \label{eq4}
-\end{equation}
 Now we can minimize the cluster distance by following the negative gradient to a local minima. 
 
 Then we switch and minimize the energy with DFTB+ and then minimize cluster distance again. Figure \ref{fig_min} shows the process. The idea is that alternate the two minimizations they will help each other out of there local minima and further down in energy and cluster distance.
