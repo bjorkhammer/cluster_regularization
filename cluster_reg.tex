@@ -105,10 +105,21 @@ In figure \ref{figfeature} the feature vector is displayed for 1019 structures o
 
 \begin{figure}[h]
     \centering
+    \includegraphics[width=1.0\columnwidth]{gmascatter.pdf}
+    \caption{Visualization of global minimum for Ti$_{21}$O$_{42}$ structures in feature space}   
+    \label{figglobal}
+\end{figure}
+
+
+
+\begin{figure}[h]
+    \centering
     \includegraphics[width=1.0\columnwidth]{fig2-scatterplot.pdf}
     \caption{Visualization of atoms from 1019 Ti$_{13}$O$_{26}$ structures in feature space}   
     \label{figfeature}
 \end{figure}
+
+
 
 
 \subsection{Clustering}
@@ -186,33 +197,17 @@ We tested these 3 configuration on a 2 layer, 3 layer and a 4 layers system.
 
 \subsection{Test result}
 
-On figure \ref{2lfig} we see that pure cluster reg. (orange curve) start finding minimum structure much faster than the benchmark (yellow curve) , but it levels out around 60-70\%. The problem is that cluster regularization and energy minimization have local minima close to each other and running the algorithm make them switch between this minima. When cluster regularization is mix with other mutations (red curve) the problem disappear. 
+On figure \ref{fig_success} we see that pure cluster reg. (orange curve) start finding minimum structure much faster than the benchmark (yellow curve) , but it levels out around 60-70\%. The problem is that cluster regularization and energy minimization have local minima close to each other and running the algorithm make them switch between this minima. When cluster regularization is mix with other mutations (red curve) the problem disappear. 
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=1.0\columnwidth]{2lsuccess.pdf}
-    \caption{Cumulative success for 2 layer system}
-    \label{2lfig}
+    \includegraphics[width=1.0\columnwidth]{fig5-success.pdf}
+    \caption{Cumulative success for 2,3 and 4 layer systems}
+    \label{fig_success}
 \end{figure}
 
-With the 3 layers system on figure \ref{3lfig} the problem isn't as prominent which might be because there is more free variables in this problems. Else we observe the same as the 2 layer system combined and pure cluster reg. does better than the benchmark. Pure cluster reg. does better in the start but is overtaken by the combined method later on. 
- 
-
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=1.0\columnwidth]{3lsuccess.pdf}
-    \caption{Cumulative success for 3 layer system}
-    \label{3lfig}
-\end{figure}
-
+With the 3 layers system on figure \ref{fig_success} the problem isn't as prominent which might be because there is more free variables in this problems. Else we observe the same as the 2 layer system combined and pure cluster reg. does better than the benchmark. Pure cluster reg. does better in the start but is overtaken by the combined method later on. 
 In the 4 layer system the tendency continues but the success rate is much lower and we made double as many runs to shrink the confidence intervals. 
-
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=1.0\columnwidth]{4lsuccess.pdf}
-    \caption{Cumulative success for 4 layer system}
-    \label{4lfig}
-\end{figure}
 
 \section{Analysis}
 
