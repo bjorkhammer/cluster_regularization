@@ -188,7 +188,7 @@ Next we did a BHO. search for the best parameters for cluster regularization, we
 
 Last we did a BHO. search for the best combination of cluster regularization, cut\&splice and rattle, we found that 70\% cluster regularization, 28\% cut\&splice and 2\% rattle did well.
 
-We tested these 3 configuration on a 2 layer, 3 layer and a 4 layers system. 
+We tested these 3 methods on a 2 layer, 3 layer and a 4 layers system. 
 
 \subsection{Test result}
 
@@ -205,6 +205,30 @@ With the 3 layers system on figure \ref{fig_success} the problem isn't as promin
 In the 4 layer system the tendency continues but the success rate is much lower and we made double as many runs to shrink the confidence intervals. 
 
 \section{Analysis}
+In \cite{Pikard2011} it is shown that the number of local stable configuration in a system is 
+\begin{equation}
+n_s(N) = e^{\alpha N}
+\end{equation}
+
+
+If we take the number of found minimas and divide with the number of attemts used. 
+We get the probability of finding the global minima.
+
+\begin{equation}
+p_{gm} ={ \text{Number of found minimas}\over \text{Number of attemts}}
+\end{equation}
+
+If we generated random structure and relaxed them it would be reasonable to assume that 
+
+\begin{equation}
+p_{gm} \propto   {1 \over e^{\alpha N}}
+\end{equation}
+
+
+
+In figure \ref{fig_scale} $p_{gm}$ is plotted for our 3 methods.
+
+
 \begin{figure}[h]
     \centering
     \includegraphics[width=1.0\columnwidth]{fig7-scaling.pdf}
@@ -212,9 +236,56 @@ In the 4 layer system the tendency continues but the success rate is much lower 
     \label{fig_scale}
 \end{figure}
 
+
+We observe that the lines is almost linear with a little kink at the middle. The kink is properly due to overfitting because the 3 layer system was use to fit the hyperparameters.  
+
+We can fit the line on the semilog plot too the form.
+
+\begin{equation}
+p_{gm} = e^{a N + b}
+\end{equation}
+
+Now we want to define some good metrics to measure the performance of our search algorithms.
+We define the search speed as $s_\text{search}= e^b$ and the scaling factor $f_\text{scale}=-1.0/a$,
+both is define such that higher values would require lesser attemts.
+
+Now the relation about can be written as. 
+
+\begin{equation}
+p_{gm} = s_{\text{search }} e^{N / f_\text{scale}}
+\end{equation}
+
+
+From our fit we get the following results from our 3 methods.
+
+
+\begin{center}
+  \begin{tabular}{ | l | c | c | }
+    \hline
+    Method & $s_{\text{search}}$ & $f_\text{scale}$ \\  
+    \hline
+    Benchmark & 0.042 & 4.638 \\ 
+    Cluster reg. & 0.055 & 4.952 \\ 
+    Combined  & 0.146 & 4.644 \\
+    \hline
+  \end{tabular}
+\end{center}
+
+
+We notice that the search speed of the resulting method is 3.5 times greater than the search speed of the benchmark method.
+
+
+
+
+
+
+
+
+
+
+
+
 \section{Conclusion}
-
-
 
 We acknowledge support from the Danish Research Council (grant no. 0602-02566B) and from VILLUM FONDEN (Investigator grant, project no. 16562).
 
