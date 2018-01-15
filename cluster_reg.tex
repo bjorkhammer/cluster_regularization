@@ -111,7 +111,36 @@ too unstable.
 
 The present work aims at formulating a means of performing a random
 update in a way that optimizes the chances of finding more stable
-structural candidates in subsequent local relaxation steps.
+structural candidates in subsequent local relaxation steps. The method
+proposed starts from assigning every atom in a given structure to a
+cluster of similar atoms present in a reference set of structures.
+The similarity is measured as the distance in a feature space, chosen
+sufficiently simple that it can be illustrated. With every atom
+assigned to a cluster, we evaluate for a given structure the sum of
+the distances in feature space of the atoms from their respective
+cluster centers. This structure specific scalar measure of distance to
+cluster centers is demonstrated to correlate with the structure
+stability -- the lower the distance measure, the more stable the
+structure. As a consequence, minimizing the cluster distance measure
+contains an element of bringing a structure into a region of
+configuration space that is expectedly more stable. The minimization
+can be done by moving opposite to an analytic gradient and has
+potential to take a structure out of local energy minima, since the
+cluster distances are measured in a space that is complementary to the
+energy landscape. We refer to our method as the
+\textit{cluster regularization method} as it penalizes large cluster
+distances.
+
+The paper is outlined as follows: In the Methods section we present
+the computational setup and outline the reference method used. In
+Theory section we describe the components of our method, including the
+choice of feature vector and the clustering technique. In the Results
+section, the method is used in full scale global optimization in
+search for the anatase TiO$_2$(001)-(1$\times$4) surface
+reconstruction. This section demonstrates the usefulness of the method
+and further investigates its efficacy as the number of unknown atomic
+position is increased in the global optimization.
+
 
 
 
