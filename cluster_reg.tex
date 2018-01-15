@@ -60,7 +60,7 @@ structure. Our method is formulated as a gradient based minimization
 of this summed cluster distance for a given structure that alternates
 with a standard gradient based energy minimization. While the latter
 minimization ensures local relaxation within a given energy funnel,
-the former enables escapes from meta-stable funnels and hence increase
+the former enables escapes from meta-stable funnels and hence increases
 the overall performance of the global optimization.
 \end{abstract}
 
@@ -71,9 +71,49 @@ the overall performance of the global optimization.
 \maketitle
 
 \section{\label{sec:introduction}Introduction}
-Searching the potential energy surface for the minimum energy structure 
+In computational materials science, knowing the atomic structure of a
+given molecule, atomic cluster or solid compound is a prerequisite for
+further prediction of electronic and thermodynamic properties of such
+a substance. In the emerging fields of combinatorial chemistry and
+high-throughput computational screening of materials, the use of local
+relaxation of probed structures is often sufficient since libraries of
+molecular building blocks and crystal structures can be used to direct
+the starting points for the searches. However, many problems exist for
+which the structural motifs in the sought-after structures have no
+analogues in known structures, and where global optimization must be
+employed. A prominent example of this is that of surface relaxations,
+that often exhibit structural motifs that are unique to a chemical
+composition and crystaline polymorph as well as orientation. Dangling
+Si-monomers and zig-zagging Si-dimers do for example evolve at the
+Si(111)-(7$\times$7) and Si(001)-c(4$\times$2) surfaces, respectively, but
+are otherwise not present in bulk Si or bulk-truncated Si surfaces. Likewise,
+rutile and anatase TiO$_O$ single-crystal surfaces are known to exhibit
+reconstructions and ad-structures, that have no equivalent in any TiO$_2$ bulk or surface systems.
 
-Evolutionary algorithms are frequently use in search for stable atomic structures and potential energy surfaces.
+Many strategies exist for performing global optimization in
+conjunction with model potential or first-principles total energy
+frameworks. Among these, stoichastic methods such as random search and
+basin hopping are widely used and more advanced methods based on
+evolutionary algorithms (EA) are becoming increasingly popular. Common
+to these methods is the need for the perturbative update steps
+followed by local relaxation and evaluation of whether or not to
+retain the new structure. The nature of the perturbation steps ranges
+from a mere rattling of the atomic positions to highly advanced
+cross-over operations in which the atomic structure of several known
+systems are combined. The exploration of configuration space is
+ensured by the very stochastic nature of these updates, yet updates
+that are too random will too often lead to rejection of the locally
+relaxed structure and hence cause slow convergence. The atomic
+displacement amplitude in a rattling update is a good example of
+this. The amplitude must be kept small and sometimes only apply to a
+subset of the atoms, as the new structural candidate otherwise become
+too unstable.
+
+The present work aims at formulating a means of performing a random
+update in a way that optimizes the chances of finding more stable
+structural candidates in subsequent local relaxation steps.
+
+
 
 
 \begin{figure}[h]
