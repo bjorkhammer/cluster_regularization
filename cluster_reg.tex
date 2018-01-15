@@ -32,11 +32,11 @@
 \title[]{Accelerating atomic structure search with cluster regularization}% Force line breaks with \\
 
 \author{K.\ H.\ S{\o}rensen}
-\author{M.\ S.\ J{\o}rgensen ??}
+\author{M.\ S.\ J{\o}rgensen}
 \author{B.\ Hammer}
 \email{hammer@phys.au.dk}
 \affiliation{ 
-Department of Physics and Astronomy, and Interdisciplinary Nanoscience Center (iNANO), Aarhus University, Denmark.
+Department of Physics and Astronomy, and Interdisciplinary Nanoscience Center (iNANO), Aarhus University, DK-8000 Aarhus C, Denmark.
 }
 % \homepage{phys.au.dk}
  
@@ -44,11 +44,24 @@ Department of Physics and Astronomy, and Interdisciplinary Nanoscience Center (i
              %  but any date may be explicitly specified
 
 \begin{abstract}
-Knowing the atomic minimum energy structure for a material is very important for predicting 
-its properties, but finding the atomic minimum structure is a difficult problem where the search can get stuck in many local minimums. 
-While working with clustering on atomic feature vectors it was discovered that the sum of distances to cluster centers 
-was correlated with the energy of the structures. Then the discovery was exploited in a regularization method which can help release the search from local minima.
-The method was implemented as a mutation operator for the genetic search algorithm in the Atomic Simulation Environment (ASE) and then used to speed up the global minimum search for TiO$_{2}$ ridge reconstruction. 
+We present a method for accelerating the global structure optimization
+of atomic compounds. The method is demonstrated to speed up the
+finding of the anatase TiO$_2$(001)-(1$\times$4) surface
+reconstruction within a tight-binding density functional theory (DFTB)
+based evolutionary algorithm (EA) framework. As a key element of the
+method, we use unsupervised machine learning techniques to categorize
+the atoms in a diverse set of partially disordered surface structures
+into clusters of atoms having similar local atomic
+environments. Analysis of more than 1000 different structures show
+that the total energy of the structures correlate with the summed
+distances in feature space of the atomic environments to their
+respective cluster centers, where the sum runs over all atoms in each
+structure. Our method is formulated as a gradient based minimization
+of this summed cluster distance for a given structure that alternates
+with a standard gradient based energy minimization. While the latter
+minimization ensures local relaxation within a given energy funnel,
+the former enables escapes from meta-stable funnels and hence increase
+the overall performance of the global optimization.
 \end{abstract}
 
 \pacs{Valid PACS appear here}% PACS, the Physics and Astronomy
@@ -287,7 +300,7 @@ We notice that the search speed of the resulting method is 3.5 times greater tha
 
 \section{Conclusion}
 
-We acknowledge support from the Danish Research Council (grant no. 0602-02566B) and from VILLUM FONDEN (Investigator grant, project no. 16562).
+We acknowledge support from the Danish Council for Independent Research | Natural Science (grant no. 0602-02566B) and from VILLUM FONDEN (Investigator grant, project no. 16562).
 
 \begin{thebibliography}{12}  
 \bibitem{Starke1998} U. Starke \textit{et al}., Phys. Rev. Lett. \textbf{80}, 758 (1998).    
