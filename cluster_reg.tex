@@ -57,7 +57,7 @@ that the total energy of the structures correlate with the summed
 distances in feature space of the atomic environments to their
 respective cluster centers, where the sum runs over all atoms in each
 structure. Our method is formulated as a gradient based minimization
-of this summed cluster distance for a given structure that alternates
+of this summed cluster distance for a given structure and alternates
 with a standard gradient based energy minimization. While the latter
 minimization ensures local relaxation within a given energy funnel,
 the former enables escapes from meta-stable funnels and hence increases
@@ -83,11 +83,11 @@ which the structural motifs in the sought-after structures have no
 analogues in known structures, and where global optimization must be
 employed. A prominent example of this is that of surface relaxations,
 that often exhibit structural motifs that are unique to a chemical
-composition and crystaline polymorph as well as orientation. Dangling
+composition, crystaline polymorph, and surface orientation. Dangling
 Si-monomers and zig-zagging Si-dimers do for example evolve at the
 Si(111)-(7$\times$7) and Si(001)-c(4$\times$2) surfaces, respectively, but
 are otherwise not present in bulk Si or bulk-truncated Si surfaces. Likewise,
-rutile and anatase TiO$_O$ single-crystal surfaces are known to exhibit
+rutile and anatase TiO$_2$ single-crystal surfaces are known to exhibit
 reconstructions and ad-structures, that have no equivalent in any TiO$_2$ bulk or surface systems.
 
 Many strategies exist for performing global optimization in
@@ -99,11 +99,11 @@ to these methods is the need for the perturbative update steps
 followed by local relaxation and evaluation of whether or not to
 retain the new structure. The nature of the perturbation steps ranges
 from a mere rattling of the atomic positions to highly advanced
-cross-over operations in which the atomic structure of several known
+cross-over operations in which the atomic structures of several known
 systems are combined. The exploration of configuration space is
 ensured by the very stochastic nature of these updates, yet updates
-that are too random will too often lead to rejection of the locally
-relaxed structure and hence cause slow convergence. The atomic
+that are too random will lead to rejection of the locally
+relaxed structure too often and hence cause slow convergence. The atomic
 displacement amplitude in a rattling update is a good example of
 this. The amplitude must be kept small and sometimes only apply to a
 subset of the atoms, as the new structural candidate otherwise become
@@ -114,7 +114,7 @@ update in a way that optimizes the chances of finding more stable
 structural candidates in subsequent local relaxation steps. The method
 proposed starts from assigning every atom in a given structure to a
 cluster of similar atoms present in a reference set of structures.
-The similarity is measured as the distance in a feature space, chosen
+The similarity is measured as the distance in a feature space, chosen in this work
 sufficiently simple that it can be illustrated. With every atom
 assigned to a cluster, we evaluate for a given structure the sum of
 the distances in feature space of the atoms from their respective
@@ -126,40 +126,69 @@ contains an element of bringing a structure into a region of
 configuration space that is expectedly more stable. The minimization
 can be done by moving opposite to an analytic gradient and has
 potential to take a structure out of local energy minima, since the
-cluster distances are measured in a space that is complementary to the
+cluster distances are measured in a space that is complementary to that of the
 energy landscape. We refer to our method as the
 \textit{cluster regularization method} as it penalizes large cluster
 distances.
 
 The paper is outlined as follows: In the Methods section we present
-the computational setup and outline the reference method used. In
+the computational setup and outline the reference method used. In the
 Theory section we describe the components of our method, including the
-choice of feature vector and the clustering technique. In the Results
+choice of feature vector and the clustering technique. In the Results and Discussion
 section, the method is used in full scale global optimization in
 search for the anatase TiO$_2$(001)-(1$\times$4) surface
 reconstruction. This section demonstrates the usefulness of the method
 and further investigates its efficacy as the number of unknown atomic
-position is increased in the global optimization.
+position is increased in the global optimization. The paper ends with a Conclusion section.
 
 
 
+\section{Method}
 
-
-\begin{figure}[h]
+\subsection{Tight-binding density functional theory}
+Tight-binding density functional theory calculations (DFTB) were
+performed for TiO$_2$ structures using parameters from Ref. \cite{}.
+With this description, bulk anatase TiO$_2$ has lattice parameters of
+XX and XX {\AA} that compare well with the experimental values of XX
+and XX {\AA}. DFTB calculations have previously been conducted
+successfully for the study of XX and XX.  In the present work, we
+employ 2D periodic super cells accomodating the anatase TiO$_2$(001)
+surface with (4$\times$1) periodicity. Slabs of three different
+thicknesses were considered, containing two, three, or four layers of
+atoms. The three-layer system is illustrated in Fig.\ \ref{figintro},
+showing the template of four static TiO$_2$ units, two examples of
+disordered structures with nine extra TiO$_2$ units added, and the
+global minimum energy structure with three well ordered atomic layers
+and one extra row of TiO$_2$ protruding out of the surface.
+\begin{figure}[tb]
     \centering
     \includegraphics[width=1.0\columnwidth]{fig1-intro.pdf}
-    \caption{Example of the Ti$_{n}$O$_{2n}$ structures we are working with. Top-left the slab used, top-right a initial structure, bottom-left a structures with some minimisation, bottom-right the global mimimum.}
+    \caption{Side views of computational cells with Ti$_{n}$O$_{2n}$ structures.
+      Small red spheres: Oxygen, large grey spheres: Ti.
+      a) The template of four TiO$_2$ units.
+      b-c) Two examples of intermediate structures from an evolutionary search. Nine TiO$_2$ units
+      have been placed on the template.
+      d) The sought-after global minimum structure for the anatase TiO$_2$(001)-(1$\times$4) surface.
+    }
     \label{figintro}
 \end{figure}
 
+\subsection{Evolutionary algorithm}
+The disordered structures in Fig.\ref{figintro} are snapshots from
+search runs performed with the evolutionary algorithm (EA) available
+in the Atomic Simulation Environment (ASE)\cite{ase2}.  The EA
+iteratively improves the positions of the atoms atop the template
+structure (Fig.\ \ref{figintro}a) using cross-over operations
+combining two parent structures or mutation operations applied to
+single parent structures. The resulting offspring structures undergo
+local relaxation within DFTB following the atomic forces (i.e.\ minus
+the energy gradient). A population of $N_{pop}=20$ parent structures
+is maintained while the up to $N_{run}=20$ offspring structures are
+evolved asyncronously on a parallel high performance super
+computer. The relaxed offspring structures are included in the population
+according to their fitness evaluated as minus the DFTB energy.
+More details on the EA are given in Refs.\ \cite{Vilhelmsen2012,Vilhelmsen2014}.
 
-
-\section{The method}
-What we are contributing in this article is a method we call cluster regularization. 
-It is a way to impose symmetry into the search without specifying the symmetry explicit, 
-as pointed out in \cite{Pikard2011} low energy structures tend to have a very high degree of symmetry.
-
-The method first constructing a feature vector for each atom, then cluster this feature vectors, and at last update the atomic positions such that the distance between the feature vectors and the cluster centers are minimized.   
 
 \subsection{Atomic features}
  
@@ -377,7 +406,21 @@ We acknowledge support from the Danish Council for Independent Research | Natura
 \bibitem{Pikard2011}  {Ab initio random structure searching} Chris J. Pickard and R. J. Needs. J. Phys.: Condens. Matter \textbf{23} (2011) 053201 (23pp) DOI:10.1088/0953-8984/23/5/053201
 \bibitem{Botu2015} {Adaptive Machine Learning Framework to Accelerate Ab Initio Molecular Dynamics.} V. Botu and R. Ramprasad, Int. J. Quantum Chem. 2015, 115 ,1075-18083. DOI:10.1002/qua.24836    
 \bibitem{Chen2017} {Understanding atomic chemistry with machine learning.} Chen, X., Jørgenson, M. S., Hammer, B., \& Li, J. (2017) Unpublished
+\bibitem{Vilhelmsen2012}L. B. Vilhelmsen and B. Hammer, Phys. Rev. Lett. \textbf{108}, 126101 (2012).
+\bibitem{Vilhelmsen2014}L. B.\ Vilhelmsen and B.\ Hammer, J. Chem. Phys. \textbf{141}, 044711 (2014).
+\bibitem{ase2}A.\ H.\ Larsen \textit{et al.}, J. Phys. Condens. Matter 2017, 29, 273002.
 \end{thebibliography}
+
+\section{removed sections}
+
+What we are contributing in this article is a method we call cluster regularization. 
+It is a way to impose symmetry into the search without specifying the symmetry explicit, 
+as pointed out in \cite{Pikard2011} low energy structures tend to have a very high degree of symmetry.
+
+The method first constructing a feature vector for each atom, then cluster this feature vectors, and at last update the atomic positions such that the distance between the feature vectors and the cluster centers are minimized.   
+
 
 
 \end{document}
+
+
