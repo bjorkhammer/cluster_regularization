@@ -192,10 +192,13 @@ computer. The relaxed offspring structures are included in the population
 according to their fitness evaluated as minus the DFTB energy.
 More details on the EA are given in Refs.\ \cite{Vilhelmsen2012,Vilhelmsen2014}.
 
-The cluster regularization method proposed in this work is implemented as
-a mutation operation and its usefulness is gauged by comparing an EA search
-where this mutation is used either exclusively or occationally to a benchmark
-EA search, where it is not used at all.
+The cluster regularization method proposed in this work is implemented
+as a mutation operation and its usefulness is gauged by comparing an
+EA search where this mutation is used either exclusively or
+occationally to a benchmark EA search, where it is not used at all. We
+also test the method in a basin hopping (BH) framework, in which some
+perturbing update step alternates a local energy relaxation step, see
+Ref.\ \cite{} for details.
 
 \subsection{Machine learning techniques}
 Our method uses two components of general machine learning techniques:
@@ -316,7 +319,7 @@ color, respectively.  The two axes in the plots are the
 $\rho^{Z^\mathrm{O}}$ and $\rho^{Z^\mathrm{Ti}}$ densities.  In
 Fig.\ \ref{fig_global}, the atomic structure considered is that of the
 three-layer global minimum energy structure introduced in
-Fig.\ \ref{figintro}d. The figure shows how strong correlations exist
+Fig.\ \ref{figintro}d. The figure shows that strong correlations exist
 for the features. Features for oxygen atoms lie on one line, while
 features for titanium atoms lie on another. Within each line the 26
 data points for oxygen atoms and 13 data points for titanium atoms
@@ -344,8 +347,11 @@ Figure \ref{fig_feature} presents the distribution of atomic features
 for the 26+13 atoms in about 1000 different structures of the
 three-layer system. The structures are taken from several EA searches
 and have been filtered so that they can be considered distinct
-structures. The wide distribution of the feature vectors for general structures as opposed to
-the highly ordered 
+structures. The wide distribution of the feature vectors for general
+structures as opposed to the highly ordered features for the global
+minimum energy structure indicate that despite its simplicity the
+feature vector holds great potential to capture variations in local
+structure present in the disordered structures.
 
 \begin{figure}[tb]
     \centering
@@ -354,17 +360,18 @@ the highly ordered
     \label{fig_corr}
 \end{figure}
 
-Introducing clustering of the atomic feature vectors present in
-Fig.\ \ref{fig_feature} a strong correlation between, the total
+A strong correlation between the total
 cluster distance, $D_S$, and the total DFTB energy,
-$E_S^\mathrm{DFTB}$, is revealed. The correlation is illustrated in
+$E_S^\mathrm{DFTB}$, is revealed when a
+clustering of the atomic feature vectors present in
+Fig.\ \ref{fig_feature} is performed. The correlation is illustrated in
 Fig.\ \ref{fig_corr}. The correlation may in part be explained by the
 general observation that Nature often favors high
 symmetry\cite{Pikard2011}, i.e.\ structures with low energy often has
 recurring atomic motifs. A single crystal is an obvious example of
-this, in the ground state, the atoms all assume the same local
+this, since all the atoms assume the same local
 environments. In fact, the scatter plot similar to
-Figs.\ \ref{fig_global} and \ref{fig_feature} only contains one point
+Figs.\ \ref{fig_global} and \ref{fig_feature} only contains just one point
 for each of the two chemical elements, oxygen and titanium, and with
 two cluster centers, the total cluster distance would be zero. In our
 case, a slab geometry is used causing the presence of two surfaces
@@ -374,21 +381,59 @@ distance becomes finite, reflecting the surface energy cost.  For any
 disordered slab structure, the feature vectors scatter even more and
 (according to Fig.\ \ref{fig_corr}) the cluster distance increases
 further at the same time as the total energy of the structure
-increases above that of the global minimum energy structure.
+raises above that of the global minimum energy structure.
 
-\section{Cluster regularization method}
+\subsubsection{Cluster regularization method}
 The observed correlation between energy and cluster distance forms the
-basis for our new method, \textit{Cluster regularization}. The method
+basis for our new method for perturbing an atomic structure in the
+search for the global minimum energy structure. The method simply
+performs a local minimization of the cluster distance for fixed
+cluster centers. I.e.\ structures subjected to the method undergo
+regularization with respect to their cluster distance measure. The
+regularization takes place as a gradient based optimization using
+standard techniques. There is no guarantee or even expectation that the
+cluster regularization will directly perturb a given structure towards
+a lower energy structure, but the cluster distance-energy correlation
+in Fig.\ \ref{fig_corr} is suggestive that when moved according to (minus) the cluster distance gradient, a given structure may leave a meta-stable funnel
+region of the energy landscape and move into a more favorable
+funnel in the energy landscape. This is indeed observed to happen and will be illustrated
+below when the cluster regularization is used in two different ways,
+either as the perturbation step in a basin hopping (BH) setup or as a
+possible perturbation step in an evolutionary search.
 
-
-Then we switch and minimize the energy with DFTB+ and then minimize cluster distance again. Figure \ref{fig_min} shows the process. The idea is that alternate the two minimizations they will help each other out of there local minima and further down in energy and cluster distance.
-   
 \begin{figure}[h]
     \centering
     \includegraphics[width=1.0\columnwidth]{fig5-minimize.pdf}
     \caption{Green lines and arrows shows a cluster distance (cd) minimization and the blue DFTB+ relaxations. Here the first/bottom layer is the template. While it is hard to see progress in individual minimization step there is small details to notice on the plot. Notice that in the cd. step from 16 to 17 the hole in the second layer is filled and that in the cd. step from 18 to 19 the 2 oxygen atoms in top left corner is split up.}
     \label{fig_min}
 \end{figure}
+
+\subsubsection{Perturbation step in BH}
+Figure \ref{fig_min} illustrates the outcome of the simplest
+conceivable way of using the cluster regularization, namely as the
+perturbing step in a basin hopping setup. Figure \ref{fig_min}a-c
+illustrate how alternating cluster regularization steps (green color)
+and local relaxation, i.e.\ energy minimization, steps (blue color) lead to
+pregressively more favorable structures. Figure \ref{fig_min}a and b
+show the evolution of the energy and the cluster distance,
+respectively, during the updates. The starting point is a fully
+relaxed random structure which through the cluster regularization
+perturbations is taken out of many different local energy minima,
+thereby gaining about 0.5 eV over the course of 25 updates. Figure
+\ref{fig_min}c combines the two measures, cluster distance and energy,
+giving an overview of how the structure develops. We observe (not shown) that many
+BH runs end up in a dynamic equilibrium in which the structure jumps
+back and forth between the same two local minima, one on the cluster
+distance landscape and one on the energy landscape. However,
+occationally, the BH runs succeed in identifying the global energy
+minimum structure, as illustrated with the penultimate and ultimate
+optimization steps of such BH runs in Figs.\ \ref{fig_min}e-f.
+
+\subsubsection{Mutation in EA}
+
+
+Then we switch and minimize the energy with DFTB+ and then minimize cluster distance again. Figure \ref{fig_min} shows the process. The idea is that alternate the two minimizations they will help each other out of there local minima and further down in energy and cluster distance.
+   
 
 
 \section{Results and Discussion}
@@ -455,14 +500,6 @@ We acknowledge support from the Danish Council for Independent Research | Natura
 \bibitem{Vilhelmsen2014}L. B.\ Vilhelmsen and B.\ Hammer, J. Chem. Phys. \textbf{141}, 044711 (2014).
 \bibitem{ase2}A.\ H.\ Larsen \textit{et al.}, J. Phys. Condens. Matter 2017, 29, 273002.
 \end{thebibliography}
-
-\section{removed sections}
-
-It is a way to impose symmetry into the search without specifying the symmetry explicit, 
-as pointed out in \cite{Pikard2011} low energy structures tend to have a very high degree of symmetry.
-
-The method first constructing a feature vector for each atom, then cluster this feature vectors, and at last update the atomic positions such that the distance between the feature vectors and the cluster centers are minimized.   
-
 
 
 \end{document}
