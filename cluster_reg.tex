@@ -288,7 +288,7 @@ $\left\{\vec{c}_k\right\}$, will be known. Representing by $k(i)$ the
 index of the cluster center that a given atom $i$ belongs to, we can
 now evaluate the sum of all cluster distances for a given structure accoring to:
 \begin{equation}
-D_S = \sum_{i \in S} \left|\vec f_i- \vec c_{k(i)}\right| \label{eq3}
+D_S = \sum_{i \in S} \left|\vec f_i- \vec c_{k(i)}\right| \label{eq4}
 \end{equation}
 where $S$ is the structure (a list of atoms). Note that $D_S$ is a
 scalar number, which in principle exists for any conceivable set of
@@ -411,78 +411,97 @@ possible perturbation step in an evolutionary search.
 \subsubsection{Perturbation step in BH}
 Figure \ref{fig_min} illustrates the outcome of the simplest
 conceivable way of using the cluster regularization, namely as the
-perturbing step in a basin hopping setup. Figure \ref{fig_min}a-c
-illustrate how alternating cluster regularization steps (green color)
-and local relaxation, i.e.\ energy minimization, steps (blue color) lead to
-pregressively more favorable structures. Figure \ref{fig_min}a and b
-show the evolution of the energy and the cluster distance,
-respectively, during the updates. The starting point is a fully
-relaxed random structure which through the cluster regularization
-perturbations is taken out of many different local energy minima,
-thereby gaining about 0.5 eV over the course of 25 updates. Figure
-\ref{fig_min}c combines the two measures, cluster distance and energy,
-giving an overview of how the structure develops. We observe (not shown) that many
-BH runs end up in a dynamic equilibrium in which the structure jumps
-back and forth between the same two local minima, one on the cluster
-distance landscape and one on the energy landscape. However,
-occationally, the BH runs succeed in identifying the global energy
-minimum structure, as illustrated with the penultimate and ultimate
-optimization steps of such BH runs in Figs.\ \ref{fig_min}e-f.
+perturbing step in a basin hopping setup. In such a setup, the cluster
+centers entering Eq.\ (\ref{eq4}) are obtained by clustering the
+atomic features to the latest structure in the search.  Figure
+\ref{fig_min}a-c illustrate how alternating cluster regularization
+steps (green color) and local relaxation, i.e.\ energy minimization,
+steps (blue color) lead to pregressively more favorable
+structures. Figure \ref{fig_min}a and b show the evolution of the
+energy and the cluster distance, respectively, during the updates. The
+starting point is a fully relaxed random structure which through the
+cluster regularization perturbations is taken out of many different
+local energy minima, thereby gaining about 0.5 eV over the course of
+25 updates. Figure \ref{fig_min}c combines the two measures, cluster
+distance and energy, giving an overview of how the structure
+develops. We observe (not shown) that many BH runs end up in a dynamic
+equilibrium in which the structure jumps back and forth between the
+same two local minima, one on the cluster distance landscape and one
+on the energy landscape. However, occationally, the BH runs succeed in
+identifying the global energy minimum structure, as illustrated with
+the penultimate and ultimate optimization steps of such BH runs in
+Figs.\ \ref{fig_min}e-f.
 
 \subsubsection{Mutation in EA}
+The cluster regularization method lends itself particularly well for
+use as a mutation in connection with an evolutionary algorithm (EA). It can
+serve in a manner simular to that in a basin hopping setup, but owing
+to the stochastic elementrs in the EA, the risk of being trapped in a
+dynamic equilibrium is practically eliminated.
 
-
-Then we switch and minimize the energy with DFTB+ and then minimize cluster distance again. Figure \ref{fig_min} shows the process. The idea is that alternate the two minimizations they will help each other out of there local minima and further down in energy and cluster distance.
-   
-
-
-\section{Results and Discussion}
-
-\subsection{Test setup}
-To test the technique we implemented cluster regularization as a mutation operator in ASE's genetic algorithm (ga)\cite{ase_ga} framework. 
-The mutation operator takes a list of parents and the execute the following steps:
+We introduced the cluster regularization as an EA mutation in the following way:
 \begin{enumerate}
+\item Draw randomly $N_{par}$ parents from the population.
 \item Calculate atomic features for all parents.
 \item Cluster them and find cluster centers.
 \item Copy the lowest energy parent to the child
-\item minimize cluster distance of child.
-\item return child.
+\item Minimize the cluster distance of the child.
+\item Return child.
 \end{enumerate}
-When the mutation returns the child then the ga will make a energy relaxation 
-and we have a cycle as illustrated in figure \ref{fig_min}.
+When the mutation returns the child the EA will make an energy
+relaxation and we have a cycle similar to that of the BH setup
+illustrated in figure \ref{fig_min}. However, for the EA cycle, the
+random drawing of parents will ensure a more stochastic nature of the
+search.
 
-To establish a benchmark the ga with bayesian hyper-parameter optimization (BHO.) search was run on the 3 layer system.
-Run with cut\&splice, permutation and rattle mutations the search found the optimal ratios was 59\% cut\&splice, 0\% permutation, 41\% rattle. 
+The optimium values of the free parameters in the new mutation were
+determined with bayesian hyper-parameter optimization (BHO.) search
+runs on the three-layer system. We found $N_c=5$ clusters, $N_{par}=3$
+parents, and a cut-off radius of $r_c=11.9$ {\AA} as the optimum
+values. Next, a separate BHO. search was done to identify the optimum
+frequency by which the mutation should be used. The search gave an
+optimum ratio of 70\% cluster regularization, 28\% cut\&splice and 2\%
+rattle mutation when cluster regularization was included which
+compares to an BHO. based result of 59\% cut\&splice, 0\% permutation,
+41\% rattle mutation in the absence of the cluster regularization. The
+latter parameters were used for benchmark runs. In both cases, the
+BHO. search method included the possibility of performing permutation
+mutations, but opted not to do so. In order to gauge the efficiency of
+the cluster regularization method on its own we further did EA runs,
+using that method exclusively (i.e.\ having 100\% cluster
+regulatization and 0\% cut\&splice and 0\% rattle mutation).
 
-Next we did a BHO. search for the best parameters for cluster regularization, we found that 5 clusters, 3 parents and cutoff radius c=11.9 gave the best results.
-
-Last we did a BHO. search for the best combination of cluster regularization, cut\&splice and rattle, we found that 70\% cluster regularization, 28\% cut\&splice and 2\% rattle did well.
-
-We tested these 3 methods on a 2 layer, 3 layer and a 4 layers system. 
-
-\subsection{Test result}
-
-On figure \ref{fig_success} we see that pure cluster reg. (orange curve) start finding minimum structure much faster than the benchmark (yellow curve) , but it levels out around 60-70\%. The problem is that cluster regularization and energy minimization have local minima close to each other and running the algorithm make them switch between this minima. When cluster regularization is mix with other mutations (red curve) the problem disappear. 
-
-\begin{figure}[h]
+\begin{figure}[tb]
     \centering
     \includegraphics[width=1.0\columnwidth]{fig6-success.pdf}
     \caption{Cumulative success for 2,3 and 4 layer systems}
     \label{fig_success}
 \end{figure}
 
-With the 3 layers system on figure \ref{fig_success} the problem isn't as prominent which might be because there is more free variables in this problems. Else we observe the same as the 2 layer system combined and pure cluster reg. does better than the benchmark. Pure cluster reg. does better in the start but is overtaken by the combined method later on. 
-In the 4 layer system the tendency continues but the success rate is much lower and we made double as many runs to shrink the confidence intervals. 
+The three EA modes -- benchmark, all-cluster regularization, and
+combined -- were tested for two-, three-, and four-layer TiO$_2$
+systems. The results are presented in Fig.\ \ref{fig_success} that
+plot the accumulated success rates of XX restarts of the EA. Note that
+the number of required attempts (measured on the $x$-axis) changes as
+the system size increases.
 
+For all system sizes, it is seen that the all-cluster regularization
+method (orange curve) starts finding the global minium energy
+structure sooner than the (yellow curve). For the two-layer system,
+the all-cluster regularization method levels off at around 60-70\%
+with an overall smaller success rate than obtained in the benchmark
+runs. The larger systems were not run long enough to see if a similar
+effect would occur for these systems. We speculate that the observed
+stagnation of the all-cluster regularization can be explained as a set
+of dynamic equilibria having been reached, now involving a large
+number of structure (essentially most of the population members).
 
-
-
-
-
-
-
-
-
+By resorting to the combined method, where the cluster regularization
+method is used with its optimum 70\% likelihood the overall best
+performance is reached for all three systems (red curves). The
+combined method still exhibit much sooner finding of the global energy
+minimum structure than the benchmark runs, and no signs are seen of
+stagnation.
 
 
 
