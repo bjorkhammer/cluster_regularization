@@ -413,10 +413,10 @@ Figure \ref{fig_min} illustrates the outcome of the simplest
 conceivable way of using the cluster regularization, namely as the
 perturbing step in a basin hopping setup. In such a setup, the cluster
 centers entering Eq.\ (\ref{eq4}) are obtained by clustering the
-atomic features to the latest structure in the search.  Figure
+atomic features present in the latest structure in the search.  Figure
 \ref{fig_min}a-c illustrate how alternating cluster regularization
 steps (green color) and local relaxation, i.e.\ energy minimization,
-steps (blue color) lead to pregressively more favorable
+steps (blue color) lead to progressively more favorable
 structures. Figure \ref{fig_min}a and b show the evolution of the
 energy and the cluster distance, respectively, during the updates. The
 starting point is a fully relaxed random structure which through the
@@ -436,7 +436,7 @@ Figs.\ \ref{fig_min}e-f.
 The cluster regularization method lends itself particularly well for
 use as a mutation in connection with an evolutionary algorithm (EA). It can
 serve in a manner simular to that in a basin hopping setup, but owing
-to the stochastic elementrs in the EA, the risk of being trapped in a
+to the stochastic elements in the EA, the risk of being trapped in a
 dynamic equilibrium is practically eliminated.
 
 We introduced the cluster regularization as an EA mutation in the following way:
@@ -450,7 +450,7 @@ We introduced the cluster regularization as an EA mutation in the following way:
 \end{enumerate}
 When the mutation returns the child the EA will make an energy
 relaxation and we have a cycle similar to that of the BH setup
-illustrated in figure \ref{fig_min}. However, for the EA cycle, the
+illustrated in Fig.\ \ref{fig_min}. However, for the EA cycle, the
 random drawing of parents will ensure a more stochastic nature of the
 search.
 
@@ -462,7 +462,7 @@ values. Next, a separate BHO. search was done to identify the optimum
 frequency by which the mutation should be used. The search gave an
 optimum ratio of 70\% cluster regularization, 28\% cut\&splice and 2\%
 rattle mutation when cluster regularization was included which
-compares to an BHO. based result of 59\% cut\&splice, 0\% permutation,
+compares to an BHO. based result of 59\% cut\&splice and
 41\% rattle mutation in the absence of the cluster regularization. The
 latter parameters were used for benchmark runs. In both cases, the
 BHO. search method included the possibility of performing permutation
@@ -487,7 +487,7 @@ the system size increases.
 
 For all system sizes, it is seen that the all-cluster regularization
 method (orange curve) starts finding the global minium energy
-structure sooner than the (yellow curve). For the two-layer system,
+structure sooner than the benchmark method (yellow curve). For the two-layer system,
 the all-cluster regularization method levels off at around 60-70\%
 with an overall smaller success rate than obtained in the benchmark
 runs. The larger systems were not run long enough to see if a similar
