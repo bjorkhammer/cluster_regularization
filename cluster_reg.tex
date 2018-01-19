@@ -33,6 +33,7 @@
 
 \author{K.\ H.\ S{\o}rensen}
 \author{M.\ S.\ J{\o}rgensen}
+\author{A.\ Bruix}
 \author{B.\ Hammer}
 \email{hammer@phys.au.dk}
 \affiliation{ 
@@ -48,9 +49,9 @@ We present a method for accelerating the global structure optimization
 of atomic compounds. The method is demonstrated to speed up the
 finding of the anatase TiO$_2$(001)-(1$\times$4) surface
 reconstruction within a tight-binding density functional theory (DFTB)
-based evolutionary algorithm (EA) framework. As a key element of the
+framework using an evolutionary algorithm (EA). As a key element of the
 method, we use unsupervised machine learning techniques to categorize
-the atoms in a diverse set of partially disordered surface structures
+atoms present in a diverse set of partially disordered surface structures
 into clusters of atoms having similar local atomic
 environments. Analysis of more than 1000 different structures show
 that the total energy of the structures correlate with the summed
@@ -59,8 +60,8 @@ respective cluster centers, where the sum runs over all atoms in each
 structure. Our method is formulated as a gradient based minimization
 of this summed cluster distance for a given structure and alternates
 with a standard gradient based energy minimization. While the latter
-minimization ensures local relaxation within a given energy funnel,
-the former enables escapes from meta-stable funnels and hence increases
+minimization ensures local relaxation within a given energy basin,
+the former enables escapes from meta-stable basins and hence increases
 the overall performance of the global optimization.
 \end{abstract}
 
@@ -74,33 +75,33 @@ the overall performance of the global optimization.
 In computational materials science, knowing the atomic structure of a
 given molecule, atomic cluster or solid compound is a prerequisite for
 further prediction of electronic and thermodynamic properties of such
-a substance. In the emerging fields of combinatorial chemistry and
-high-throughput computational screening of materials, the use of local
+a substance.\cite{} In the emerging fields of combinatorial chemistry and
+high-throughput computational screening of materials,\cite{} the use of local
 relaxation of probed structures is often sufficient since libraries of
 molecular building blocks and crystal structures can be used to direct
-the starting points for the searches. However, many problems exist for
+the starting points for the searches.\cite{} However, many problems exist for
 which the structural motifs in the sought-after structures have no
 analogues in known structures, and where global optimization must be
 employed. A prominent example of this is that of surface relaxations,
 that often exhibit structural motifs that are unique to a chemical
 composition, crystaline polymorph, and surface orientation. Monomeric
 Si adatoms and restatoms and zig-zagging Si-dimers do for example evolve at the
-Si(111)-(7$\times$7) and Si(001)-c(4$\times$2) surfaces, respectively, but
+Si(111)-(7$\times$7) and Si(001)-c(4$\times$2) surfaces,\cite{} respectively, but
 are otherwise not present in bulk Si or bulk-truncated Si surfaces. Likewise,
 rutile and anatase TiO$_2$ single-crystal surfaces are known to exhibit
-reconstructions and ad-structures, that have no equivalent in any TiO$_2$ bulk or surface systems.
+reconstructions and ad-structures,\cite{} that have no equivalent in any TiO$_2$ bulk or surface systems.
 
 Many strategies exist for performing global optimization in
 conjunction with model potential or first-principles total energy
-frameworks. Among these, stoichastic methods such as random search and
-basin hopping are widely used and more advanced methods based on
-evolutionary algorithms (EA) are becoming increasingly popular. Common
+frameworks. Among these, stoichastic methods such as random search\cite{} and
+basin hopping (BH)\cite{} are widely used and more advanced methods based on
+evolutionary algorithms (EA) are becoming increasingly popular.\cite{} Common
 to these methods is the need for the perturbative update steps
 followed by local relaxation and evaluation of whether or not to
 retain the new structure. The nature of the perturbation steps ranges
 from a mere rattling of the atomic positions to highly advanced
 cross-over operations in which the atomic structures of several known
-systems are combined. The exploration of configuration space is
+systems are combined.\cite{} The exploration of configuration space is
 ensured by the very stochastic nature of these updates, yet updates
 that are too random will lead to rejection of the locally
 relaxed structure too often and hence cause slow convergence. The atomic
@@ -120,22 +121,22 @@ assigned to a cluster, we evaluate for a given structure the sum of
 the distances in feature space of the atoms from their respective
 cluster centers. This structure specific scalar measure of distance to
 cluster centers is demonstrated to correlate with the structure
-stability -- the lower the distance measure, the more stable the
-structure. As a consequence, minimizing the cluster distance measure
+stability -- the lower the distance measure, the more likely that the
+structure is more stable. As a consequence, minimizing the cluster distance measure
 contains an element of bringing a structure into a region of
 configuration space that is expectedly more stable. The minimization
 can be done by moving opposite to an analytic gradient and has
 potential to take a structure out of local energy minima, since the
 cluster distances are measured in a space that is complementary to that of the
 energy landscape. We refer to our method as the
-\textit{cluster regularization method} as it penalizes large cluster
-distances.
+\textit{cluster regularization method} as it penalizes large
+distances of cluster members to their cluster centers.
 
 The paper is outlined as follows: In the Methods section we present
 the computational setup, outline the reference method used, and
 describe the required machine learning components of our method,
 including the choice of feature vector and the clustering technique.
-In the New Methods section we analyse some data and formulate the cluster
+In the New Method section we analyse some data and formulate the cluster
 regularization method. In the Results and Discussion
 section, the method is used in full scale global optimization in
 search for the anatase TiO$_2$(001)-(1$\times$4) surface
@@ -186,9 +187,8 @@ combining two parent structures or mutation operations applied to
 single parent structures. The resulting offspring structures undergo
 local relaxation within DFTB following the atomic forces (i.e.\ minus
 the energy gradient). A population of $N_{pop}=20$ parent structures
-is maintained while the up to $N_{run}=20$ offspring structures are
-evolved asyncronously on a parallel high performance super
-computer. The relaxed offspring structures are included in the population
+is maintained, and new candidates are tested one at a time.
+The relaxed offspring structures are included in the population
 according to their fitness evaluated as minus the DFTB energy.
 More details on the EA are given in Refs.\ \cite{Vilhelmsen2012,Vilhelmsen2014}.
 
@@ -196,9 +196,8 @@ The cluster regularization method proposed in this work is implemented
 as a mutation operation and its usefulness is gauged by comparing an
 EA search where this mutation is used either exclusively or
 occationally to a benchmark EA search, where it is not used at all. We
-also test the method in a basin hopping (BH) framework, in which some
-perturbing update step alternates a local energy relaxation step, see
-Ref.\ \cite{} for details.
+also test the method in a basin hopping (BH) framework,\cite{} in which some
+perturbing update step alternates with a local energy relaxation step.
 
 \subsection{Machine learning techniques}
 Our method uses two components of general machine learning techniques:
@@ -229,14 +228,16 @@ invariance.
 
 Atom-specific feature vectors representing the local
 chemical environments of the atoms in a compound structure are
-particularly abundant in the literature. Here the Behler-Parrinello
+particularly abundant in the literature. Such feature vectors are usually
+formulated in internal coordinates and therefore have the translational
+and rotational invariance nicely build in by construction. The Behler-Parrinello (BP)
 symmetry function formulation\cite{} stand out as a seminal
 contribution, yet one with rather many parameters to be chosen by the
-user. With symmetry functions, each atom is represented by a selection
+user. With BP symmetry functions, each atom is represented by a selection
 of 2-body distance terms and 3-body angular terms. All terms are
-attenuated with an envelope function that ensures a smooth decay to
+attenuated with a cutoff function that ensures a smooth decay to
 zero at a set cutoff distance.  Recently, more advanced atom-specific feature vectors
-have been developed in which e.g.\ 4-atom torsion angles are included.
+have been developed for which e.g.\ 4-atom torsion angles are included.
 Such feature vectors have proven superior in reproducing energies,
 HOMO-LUMO gaps, polarizations, and a number of other properties for a
 diverse set of molecules.\cite{}
@@ -244,7 +245,7 @@ diverse set of molecules.\cite{}
 In the present work we adopt an exceedingly simple atom-specific
 feature vector with only three components:
 \begin{equation}
-\vec{f}_i=\left[Z_i,\rho_i^{Z^\mathrm{O}},\rho_i^{Z^\mathrm{Ti}}\right]\label{eq_feature}
+\mathbf{f}_i=\left[Z_i,\rho_i^{Z^\mathrm{O}},\rho_i^{Z^\mathrm{Ti}}\right]\label{eq_feature}
 \end{equation}
 where $Z_i$ is the atomic number of atom $i$, while
 $\rho_i^{Z^\mathrm{O}}$ and $\rho_i^{Z^\mathrm{Ti}}$ are measures for
@@ -256,9 +257,9 @@ and Ramprasad \cite{Botu2015}. In our work we use:
 \rho_i^Z = \sum_{j\ne i,Z_j=Z} e^{-r_{ij}/\lambda}g_c(r_{ij})  \label{eq1}
 \end{equation}
 where $Z$ is either $Z^\mathrm{O}$ or $Z^\mathrm{Ti}$, $j$ runs over
-all atomic indices, $Z_j$ is the atomic number of the $j$'th atom, $r_{ij}$ is the distance $|\vec r_{ij}|=|\vec r_j-
-\vec r_i|$ from the $i$'th to the $j$'th atom, and
-$\lambda=1\text{\AA}$ is a chosen length scale. $g_c$ is a cut-off
+all atomic indices, $Z_j$ is the atomic number of the $j$'th atom, $r_{ij}$ is the distance $|\mathbf r_{ij}|=|\mathbf r_j-
+\mathbf r_i|$ from the $i$'th to the $j$'th atom, and
+$\lambda=1$ {\AA} is a chosen length scale. $g_c$ is a cut-off
 function given by:
 \begin{equation}
 g_c(r)=
@@ -270,7 +271,8 @@ g_c(r)=
 \right.
 \end{equation}
 which ensures that the densities vanish algebraically at the cut-off
-radius, $r_c$. Owing to the presence of $g_c$, the sum in Eq.\ (\ref{eq1}) needs
+radius, $r_c$. For $r_c$ we use 11.9 {\AA} which was determined in a parameter search detailed below.
+Owing to the presence of $g_c$, the sum in Eq.\ (\ref{eq1}) needs
 in practice only to run over nearest neighbors to atom $i$.
 
 \subsubsection{Clustering}
@@ -284,11 +286,11 @@ of cluster centers, $N_c=5$.
 
 Whenever a clustering of atom-specific feature vectors has been
 performed, a set of resulting cluster centers,
-$\left\{\vec{c}_k\right\}$, will be known. Representing by $k(i)$ the
+$\left\{\mathbf{c}_k\right\}$, will be known. Representing by $k(i)$ the
 index of the cluster center that a given atom $i$ belongs to, we can
 now evaluate the sum of all cluster distances for a given structure accoring to:
 \begin{equation}
-D_S = \sum_{i \in S} \left|\vec f_i- \vec c_{k(i)}\right| \label{eq4}
+D_S = \sum_{i \in S} \left|\mathbf f_i- \mathbf c_{k(i)}\right| \label{eq4}
 \end{equation}
 where $S$ is the structure (a list of atoms). Note that $D_S$ is a
 scalar number, which in principle exists for any conceivable set of
@@ -296,12 +298,14 @@ $N$ atomic positions. As such, a continuous
 "cluster-distance"-landscape exists in $\mathbb{R}^{3N}$, and the
 atomic positions may be changed towards an overall smaller cluster
 distance by following minus the gradient of the cluster distance with
-respec to the atomic positions, $\mathbf{R}$:
+respect to the atomic positions, $\mathbf{R}$:
 \begin{equation}
--\nabla_\mathbf{R} D_S = -\sum_{i \in S} \nabla_\mathbf{R}\vec{f}_i
-\quad XXXXXXXX\quad
-\nabla_{\vec{f}_i}\left|\vec f_i- \vec c_{k(i)}\right|,
+-\nabla_\mathbf{R} D_S = -\sum_{Z \in \{Z^O,Z^{Ti}\}}\sum_{i \in S} \left(\nabla_\mathbf{R}\rho_i^Z\right)
+\frac{\partial}{\partial\rho_i^Z}\left|\mathbf f_i- \mathbf c_{k(i)}\right|,
 \end{equation}
+$$
+XXXXX a missing factor?
+$$
 where the cluster centers are kept fixed.  This is analogous to the
 atomic forces directing the minimization of the energy in the energy
 landscape.
@@ -351,7 +355,12 @@ structures. The wide distribution of the feature vectors for general
 structures as opposed to the highly ordered features for the global
 minimum energy structure indicate that despite its simplicity the
 feature vector holds great potential to capture variations in local
-structure present in the disordered structures.
+structure present in the disordered structures. The feature vector is
+clearly not unique as for example an atom with a single close neighbor may have the
+same feature vector as an atom with two more distant neighbors. However, in the
+current context, this is not of importance, since the rich variety in feature
+vectors over a real data set as seen in figure \ref{fig_feature} is the
+desired property.
 
 \begin{figure}[tb]
     \centering
@@ -364,26 +373,34 @@ A strong correlation between the total
 cluster distance, $D_S$, and the total DFTB energy,
 $E_S^\mathrm{DFTB}$, is revealed when a
 clustering of the atomic feature vectors present in
-Fig.\ \ref{fig_feature} is performed. The correlation is illustrated in
-Fig.\ \ref{fig_corr}. The correlation may in part be explained by the
+Fig.\ \ref{fig_feature} is performed. The correlation illustrated in
+Fig.\ \ref{fig_corr} may in part be explained by the
 general observation that Nature often favors high
-symmetry\cite{Pikard2011}, i.e.\ structures with low energy often has
+symmetry\cite{Pikard2011}, i.e.\ structures with low energy often have
 recurring atomic motifs. A single crystal is an obvious example of
 this, since all the atoms assume the same local
-environments. In fact, the scatter plot similar to
+environments. In fact, for bulk anatase TiO$_2$, the scatter plot similar to
 Figs.\ \ref{fig_global} and \ref{fig_feature} only contains just one point
-for each of the two chemical elements, oxygen and titanium, and with
-two cluster centers, the total cluster distance would be zero. In our
-case, a slab geometry is used causing the presence of two surfaces
+for each of the two chemical elements, oxygen and titanium. Hence with
+two cluster centers, the total cluster distance for bulk anatase TiO$_2$ would be zero. In our
+case, the slab geometry used is causing the presence of two surfaces
 that act to give several possible motifs, as evidenced for the global
-minimum by Fig.\ \ref{fig_global}, where now the total cluster
+minimum energy structure by Fig.\ \ref{fig_global}, where now the total cluster
 distance becomes finite, reflecting the surface energy cost.  For any
 disordered slab structure, the feature vectors scatter even more and
 (according to Fig.\ \ref{fig_corr}) the cluster distance increases
 further at the same time as the total energy of the structure
 raises above that of the global minimum energy structure.
 
-\subsubsection{Cluster regularization method}
+\subsection{Cluster regularization method}
+
+\begin{figure}[tb]
+    \centering
+    \includegraphics[width=1.0\columnwidth]{schematic.png}
+    \caption{}
+    \label{fig_schem}
+\end{figure}
+
 The observed correlation between energy and cluster distance forms the
 basis for our new method for perturbing an atomic structure in the
 search for the global minimum energy structure. The method simply
@@ -394,14 +411,15 @@ regularization takes place as a gradient based optimization using
 standard techniques. There is no guarantee or even expectation that the
 cluster regularization will directly perturb a given structure towards
 a lower energy structure, but the cluster distance-energy correlation
-in Fig.\ \ref{fig_corr} is suggestive that when moved according to (minus) the cluster distance gradient, a given structure may leave a meta-stable funnel
+in Fig.\ \ref{fig_corr} is suggestive that when moved according to (minus) the cluster distance gradient, a given structure may leave a meta-stable basin
 region of the energy landscape and move into a more favorable
-funnel in the energy landscape. This is indeed observed to happen and will be illustrated
-below when the cluster regularization is used in two different ways,
-either as the perturbation step in a basin hopping (BH) setup or as a
+basin in the energy landscape. The principle of the method is illustrated
+schematically in Fig.\ \ref{fig_schem}. In the following, we demonstrate the usefulness of
+the method in two different setups,
+either as the perturbation step in a basin hopping (BH) framework or as a
 possible perturbation step in an evolutionary search.
 
-\begin{figure}[h]
+\begin{figure}[tb]
     \centering
     \includegraphics[width=1.0\columnwidth]{fig5-minimize.pdf}
     \caption{Green lines and arrows shows a cluster distance (cd) minimization and the blue DFTB+ relaxations. Here the first/bottom layer is the template. While it is hard to see progress in individual minimization step there is small details to notice on the plot. Notice that in the cd. step from 16 to 17 the hole in the second layer is filled and that in the cd. step from 18 to 19 the 2 oxygen atoms in top left corner is split up.}
@@ -413,7 +431,7 @@ Figure \ref{fig_min} illustrates the outcome of the simplest
 conceivable way of using the cluster regularization, namely as the
 perturbing step in a basin hopping setup. In such a setup, the cluster
 centers entering Eq.\ (\ref{eq4}) are obtained by clustering the
-atomic features present in the latest structure in the search.  Figure
+atomic features present in the latest structure in the search.  Figures
 \ref{fig_min}a-c illustrate how alternating cluster regularization
 steps (green color) and local relaxation, i.e.\ energy minimization,
 steps (blue color) lead to progressively more favorable
@@ -421,7 +439,7 @@ structures. Figure \ref{fig_min}a and b show the evolution of the
 energy and the cluster distance, respectively, during the updates. The
 starting point is a fully relaxed random structure which through the
 cluster regularization perturbations is taken out of many different
-local energy minima, thereby gaining about 0.5 eV over the course of
+local energy minima, thereby gaining about 0.5 eV/atom over the course of
 25 updates. Figure \ref{fig_min}c combines the two measures, cluster
 distance and energy, giving an overview of how the structure
 develops. We observe (not shown) that many BH runs end up in a dynamic
@@ -435,7 +453,7 @@ Figs.\ \ref{fig_min}e-f.
 \subsubsection{Mutation in EA}
 The cluster regularization method lends itself particularly well for
 use as a mutation in connection with an evolutionary algorithm (EA). It can
-serve in a manner simular to that in a basin hopping setup, but owing
+serve in a manner similar to that in a basin hopping setup, but owing
 to the stochastic elements in the EA, the risk of being trapped in a
 dynamic equilibrium is practically eliminated.
 
@@ -460,7 +478,7 @@ runs on the three-layer system. We found $N_c=5$ clusters, $N_{par}=3$
 parents, and a cut-off radius of $r_c=11.9$ {\AA} as the optimum
 values. Next, a separate BHO. search was done to identify the optimum
 frequency by which the mutation should be used. The search gave an
-optimum ratio of 70\% cluster regularization, 28\% cut\&splice and 2\%
+optimum ratio of 70\% cluster regularization, 28\% cut\&splice, and 2\%
 rattle mutation when cluster regularization was included which
 compares to an BHO. based result of 59\% cut\&splice and
 41\% rattle mutation in the absence of the cluster regularization. The
@@ -470,6 +488,8 @@ mutations, but opted not to do so. In order to gauge the efficiency of
 the cluster regularization method on its own we further did EA runs,
 using that method exclusively (i.e.\ having 100\% cluster
 regulatization and 0\% cut\&splice and 0\% rattle mutation).
+
+\section{Results and Discussion}
 
 \begin{figure}[tb]
     \centering
@@ -487,9 +507,9 @@ the system size increases.
 
 For all system sizes, it is seen that the all-cluster regularization
 method (orange curve) starts finding the global minium energy
-structure sooner than the benchmark method (yellow curve). For the two-layer system,
-the all-cluster regularization method levels off at around 60-70\%
-with an overall smaller success rate than obtained in the benchmark
+structure much sooner than the benchmark method (yellow curve). For the two-layer system,
+the all-cluster regularization method levels off (i.e.\ stagnates) at around 60-70\%
+success rate, which is smaller than what is obtained in the benchmark
 runs. The larger systems were not run long enough to see if a similar
 effect would occur for these systems. We speculate that the observed
 stagnation of the all-cluster regularization can be explained as a set
@@ -499,13 +519,33 @@ number of structure (essentially most of the population members).
 By resorting to the combined method, where the cluster regularization
 method is used with its optimum 70\% likelihood the overall best
 performance is reached for all three systems (red curves). The
-combined method still exhibit much sooner finding of the global energy
+combined method still exhibit a much sooner onset of the finding of the global energy
 minimum structure than the benchmark runs, and no signs are seen of
 stagnation.
 
 
 
-\section{Conclusion}
+\section{Summary}
+In this work, we have used machine learning techniques to characterize
+local atomic environments in structures found during structural
+optimization of the anatase TiO$_2$(001) surface in search for the
+global minimum energy structure, with the (1$\times$4) ridge
+reconstruction. Upon clustering according to feature vectors
+describing the local atom environments, we find a correlation between
+the sum of distances of the feature vectors to their respective
+cluster centers for individual structures to the density functional
+tight binding energies for these structures. The correlation enables
+the formulation of a mutation operation for a basin hopping or
+evolutionary algorithm, that has a bias forwards taking structures
+into lower energy basins. The mutation minimizes the sum of the
+distances to the cluster center by gradient based minimization
+techniques. The usefulness of the mutation method was demonstrated in
+evolutionary searches for the anatase TiO$_2$(001) (1$\times$4) ridge
+reconstruction for three different system sizes.
+
+
+
+\section{Acknowledgements}
 
 We acknowledge support from the Danish Council for Independent Research | Natural Science (grant no. 0602-02566B) and from VILLUM FONDEN (Investigator grant, project no. 16562).
 
