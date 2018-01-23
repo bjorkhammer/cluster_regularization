@@ -388,8 +388,8 @@ raises above that of the global minimum energy structure (Figure \ref{fig_corr})
 
 \begin{figure}[tb]
     \centering
-    \includegraphics[width=1.0\columnwidth]{schematic.png}
-    \caption{}
+    \includegraphics[width=1.0\columnwidth]{schematic.pdf}
+    \caption{a) Structure optimization via alternation between minimization in real space and feature space. b+c) Situations where the structure is stuck in one or more real space local minima due to an equilibrium between minima in real space and feature space.}
     \label{fig_schem}
 \end{figure}
 
@@ -406,7 +406,7 @@ a lower energy structure, but the cluster distance-energy correlation
 in Figure\ \ref{fig_corr} is suggestive that when moved according to (minus) the cluster distance gradient, a given structure may leave a meta-stable basin
 region of the energy landscape and move into a more favorable
 basin in the energy landscape. The principle of the method is illustrated
-schematically in Figure \ref{fig_schem}. In the following, we demonstrate the usefulness of
+schematically in Figure \ref{fig_schem}a, where transformations between real space and feature space enables the structure to escape local minima. Note that a local minimum in real space is only escaped if the local minimum in feature space takes the structure to another energy basin in real space. If this is not the case, the optimization will enter an equilibrium state between real space and feature space, and thus the structure will become trapped in one or more energy basins (Figures \ref{fig_schem}b and c). In the following, we demonstrate the usefulness of
 the method in two different setups,
 either as the perturbation step in a basin hopping (BH) framework or as a
 possible perturbation step in an evolutionary search.
@@ -434,10 +434,8 @@ cluster regularization perturbations is taken out of many different
 local energy minima, thereby gaining about 0.5 eV/atom over the course of
 25 updates. Figure \ref{fig_min}c combines the two measures, cluster
 distance and energy, giving an overview of how the structure
-develops. We observe (not shown) that many BH runs end up in a dynamic
-equilibrium in which the structure jumps back and forth between the
-same two local minima, one in the cluster distance landscape and one
-in the energy landscape. However, occasionally, the BH runs succeed in
+develops. We observe (not shown) that many BH runs end up in the dynamic
+equilibrium illustrated in Figure \ref{fig_schem}b. However, occasionally, the BH runs succeed in
 identifying the global energy minimum structure, as illustrated with
 the penultimate and ultimate optimization steps of such BH runs in
 Figures \ref{fig_min}e-f.
@@ -477,7 +475,7 @@ the cluster regularization method on its own we further did EA runs
 using that method exclusively (i.e.\ having 100\% cluster
 regularization and 0\% cut-and-splice and 0\% rattle mutation).
 
-\section{Results and Discussion}
+\section{Global structure search results}
 
 \begin{figure}[tb]
     \centering
