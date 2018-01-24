@@ -1,12 +1,4 @@
- \documentclass[%
- aps,
- prl,%
- amsmath,amssymb,
-%preprint,%
- reprint,%
-%author-year,%
-%author-numerical,%
-]{revtex4-1}
+\documentclass[journal=jpccck,layout=twocolumn,manuscript=letter]{achemso}
 
 \usepackage{graphicx}% Include figure files
 \usepackage{dcolumn}% Align table columns on decimal point
@@ -21,13 +13,14 @@
 \usepackage{booktabs}
 \usepackage{float}
 \usepackage{mathtools}
+\usepackage{amsmath}
+\usepackage{amssymb}
 \usepackage{color}
 \newcommand{\comment}[1]{\noindent \textcolor{blue}{#1}}
 %My packages end
 %\usepackage[mathlines]{lineno}% Enable numbering of text and display math
 %\linenumbers\relax % Commence numbering lines
 
-\begin{document}
 
 \title[]{Accelerating atomic structure search with cluster regularization}% Force line breaks with \\
 
@@ -43,6 +36,11 @@ Department of Physics and Astronomy, and Interdisciplinary Nanoscience Center (i
  
 \date{\today}% It is always \today, today,
              %  but any date may be explicitly specified
+
+
+\begin{document}
+
+\maketitle
 
 \begin{abstract}
 We present a method for accelerating the global structure optimization
@@ -64,12 +62,6 @@ minimization ensures local relaxation within a given energy basin,
 the former enables escapes from meta-stable basins and hence increases
 the overall performance of the global optimization.
 \end{abstract}
-
-\pacs{Valid PACS appear here}% PACS, the Physics and Astronomy
-                             % Classification Scheme.
-\keywords{}%Use showkeys class option if keyword
-                              %display desired
-\maketitle
 
 \section{\label{sec:introduction}Introduction}
 In computational materials science, knowing the atomic structure of a
@@ -271,7 +263,7 @@ Owing to the presence of $g_c$, the sum in Eq.\ (\ref{eq1}) needs
 in practice only to run over nearest neighbors to atom $i$.
 
 \subsubsection{Clustering}
-Molecular and chemical physicists are often faced with vast configuration spaces when studying the structures of chemical compounds. Clustering techniques have proven valuable tools when trying to find reoccurring structural moieties \cite{Gilbert2006}, especially in combination with molecular dynamics where thousands of structure trajectories are generated \cite{Duan2010,Chema2002}. Clustering has also previously been used to aid global structure optimization \cite{Jorgensen2017}.
+Molecular and chemical physicists are often faced with vast configuration spaces when studying the structures of chemical compounds. Clustering techniques have proven valuable tools when trying to find reoccurring structural moieties \cite{Gilbert2006}, especially in combination with molecular dynamics where thousands of structure trajectories are generated \cite{Duan2010,Chema2003}. Clustering has also previously been used to aid global structure optimization \cite{Jorgensen2017}.
 
 The clustering method used is this study is k-means with two
 modifications. The first is a modification to avoid generating empty
@@ -477,7 +469,7 @@ regularization and 0\% cut-and-splice and 0\% rattle mutation).
 \begin{figure}[!hb]
     \centering
     \includegraphics[width=1.0\columnwidth]{fig6-success.pdf}
-    \caption{Cumulative success for 2,3 and 4 layer systems}
+    \caption{Cumulative success rates for 2, 3 and 4 layer TiO$_2$ systems.}
     \label{fig_success}
 \end{figure}
 
