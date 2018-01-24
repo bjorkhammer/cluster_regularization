@@ -282,15 +282,13 @@ atomic positions may be changed towards an overall smaller cluster
 distance by following the negative of the gradient of the cluster distance with
 respect to the atomic positions, $\mathbf{R}$:
 \begin{equation}
--\nabla_\mathbf{R} D_S = -\sum_{Z \in \{Z^O,Z^{Ti}\}}\sum_{i \in S} \left(\nabla_\mathbf{R}\rho_i^Z\right)
-\frac{\partial}{\partial\rho_i^Z}\left|\mathbf f_i- \mathbf c_{k(i)}\right|,
+-\nabla_\mathbf{R} D_S =-\frac{1}{2}\sum_{Z \in \left\{ Z^O \atop Z^{Ti}\right\} }\sum_{i \in S} \left(\nabla_\mathbf{R}\rho_i^Z\right)
+\frac{\partial}{\partial\rho_i^Z}\left|\mathbf f_i- \mathbf c_{k(i)}\right|
 \end{equation}
-$$
-XXXXX a missing factor?
-$$
-where the cluster centers are kept fixed.  This is analogous to the
+
+where the cluster centers are kept fixed. This is analogous to the
 atomic forces directing the minimization of the energy in the energy
-landscape.
+landscape. The initial factor $\frac{1}{2}$ is correcting for the double counting in in eq. \ref{eq1}.
 
 \section{Feature space analysis}
 
