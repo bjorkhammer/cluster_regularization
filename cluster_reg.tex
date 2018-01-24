@@ -1,4 +1,4 @@
-\documentclass[journal=jpccck,layout=twocolumn,manuscript=letter]{achemso}
+\documentclass[aip,amsmath,amssymb,reprint]{revtex4-1}
 
 \usepackage{graphicx}% Include figure files
 \usepackage{dcolumn}% Align table columns on decimal point
@@ -13,14 +13,14 @@
 \usepackage{booktabs}
 \usepackage{float}
 \usepackage{mathtools}
-\usepackage{amsmath}
-\usepackage{amssymb}
 \usepackage{color}
+\usepackage{natmove}
 \newcommand{\comment}[1]{\noindent \textcolor{blue}{#1}}
 %My packages end
 %\usepackage[mathlines]{lineno}% Enable numbering of text and display math
 %\linenumbers\relax % Commence numbering lines
 
+\begin{document}
 
 \title[]{Accelerating atomic structure search with cluster regularization}% Force line breaks with \\
 
@@ -36,11 +36,6 @@ Department of Physics and Astronomy, and Interdisciplinary Nanoscience Center (i
  
 \date{\today}% It is always \today, today,
              %  but any date may be explicitly specified
-
-
-\begin{document}
-
-\maketitle
 
 \begin{abstract}
 We present a method for accelerating the global structure optimization
@@ -62,6 +57,8 @@ minimization ensures local relaxation within a given energy basin,
 the former enables escapes from meta-stable basins and hence increases
 the overall performance of the global optimization.
 \end{abstract}
+
+\maketitle
 
 \section{\label{sec:introduction}Introduction}
 In computational materials science, knowing the atomic structure of a
@@ -138,14 +135,12 @@ position is increased in the global optimization.
 
 \section{Method}
 
-\subsection{density functional tight-binding theory}
+\subsection{Density functional tight-binding theory}
 Density functional tight-binding (DFTB) theory calculations were
-performed for TiO$_2$ structures using parameters from ref \cite{Dolgonos2010}.
-With this description, bulk anatase TiO$_2$ has lattice parameters of
-$a=3.94$ {\AA} and $c=9.47$ {\AA}. DFTB calculations for TiO$_2$ systems have previously been conducted
-successfully in studies where either the system size or the number of calculations is too large for a full first principles density functional theory (DFT) study \cite{Selli2017a, Selli2017b}. The loss of accuracy in using DFTB over DFT in this study is not of significant importance because our goal is to enhance global structure optimization, and not that of finding exact geometries. In the present work, we
+performed for TiO$_2$ structures using parameters from ref \cite{Dolgonos2010}. Self-consistent charge DFTB calculations for TiO$_2$ systems have previously been conducted
+successfully in studies where either the system size or the number of calculations is too large for a full first principles density functional theory (DFT) study \cite{Selli2017a, Selli2017b}. In this study, we choose not to include the self-consistent charge correction in order to further increase the computation speed. The loss of accuracy in using DFTB over DFT is not of significant importance because our goal is to enhance global structure optimization, and not that of finding exact geometries. In the present work, we
 employ 2D periodic super cells accomodating the anatase TiO$_2$(001)
-surface with (4$\times$1) periodicity. Slabs of three different
+surface with (4$\times$1) periodicity with lattice parameters $a=3.94$ {\AA} and $c=9.47$ {\AA}. Slabs of three different
 thicknesses were considered, containing two, three, or four layers of
 atoms. The three-layer system is illustrated in Figure \ref{figintro},
 showing the template of four static TiO$_2$ units, two examples of
@@ -178,7 +173,7 @@ the energy gradient). A population of $N_\mathrm{pop}=20$ parent structures
 is maintained, and new candidates are tested one at a time.
 The relaxed offspring structures are included in the population
 according to their fitness evaluated as the negative of the DFTB energy.
-More details on the EA are given in refs \cite{Vilhelmsen2012} and \cite{Vilhelmsen2014}.
+More details on the EA are given in refs \cite{Vilhelmsen2012, Vilhelmsen2014}.
 
 The cluster regularization method proposed in this work is implemented
 as a mutation operation and its usefulness is gauged by comparing an
