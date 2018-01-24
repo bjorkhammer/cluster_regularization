@@ -259,7 +259,7 @@ function given by:
 \begin{equation}
 g_c(r)=
 \left\{\begin{array}{ll}
-\frac{1}{2}{\cos(\pi \frac{r}{r_c})+1},&r<r_c\\
+\frac{1}{2}{\cos(\pi \frac{r}{r_c})+\frac{1}{2}},&r<r_c\\
 \\
 0,&r\ge r_c
 \end{array}
@@ -410,12 +410,12 @@ the method in two different setups,
 either as the perturbation step in a basin hopping (BH) framework or as a
 possible perturbation step in an evolutionary search.
 
-\begin{figure}[tb]
+\begin{figure*}[tb]
     \centering
-    \includegraphics[width=1.0\columnwidth]{fig5-minimize.pdf}
+    \includegraphics[width=2.0\columnwidth]{fig5-minimize.pdf}
     \caption{Green lines and arrows indicate cluster distance (cd) minimization steps, and blue lines indicate DFTB+ relaxations. Here the first (bottom) layer is the template. While it is hard to see progress in individual minimization steps there are small details to notice in the plot. In the cd step from 16 to 17 the vacancy in the second layer is filled and in the cd step from 18 to 19 the two oxygen atoms in the top left corner are split up.}
     \label{fig_min}
-\end{figure}
+\end{figure*}
 
 \subsubsection{Perturbation step in BH}
 Figure \ref{fig_min} illustrates the outcome of the simplest
@@ -474,14 +474,15 @@ the cluster regularization method on its own we further did EA runs
 using that method exclusively (i.e.\ having 100\% cluster
 regularization and 0\% cut-and-splice and 0\% rattle mutation).
 
-\section{Global structure search results}
-
-\begin{figure}[tb]
+\begin{figure}[!hb]
     \centering
     \includegraphics[width=1.0\columnwidth]{fig6-success.pdf}
     \caption{Cumulative success for 2,3 and 4 layer systems}
     \label{fig_success}
 \end{figure}
+
+\section{Global structure search results}
+
 
 The three EA settings -- benchmark, all-cluster regularization, and
 combined -- were tested for two-, three-, and four-layer TiO$_2$
