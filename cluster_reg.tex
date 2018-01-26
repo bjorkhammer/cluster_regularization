@@ -71,7 +71,7 @@ molecular building blocks and crystal structures can be used to direct
 the starting points for the searches.\cite{hafner2006} However, many problems exist for
 which the structural motifs in the sought-after structures have no
 analogues in known structures, and where global optimization must be
-employed. A prominent example of this is that of surface relaxations,
+employed. A prominent example of this is that of surface reconstructions,
 which often exhibit structural motifs that are unique to a chemical
 composition, crystaline polymorph, and surface orientation. Monomeric
 Si adatoms and restatoms and zig-zagging Si-dimers do for example evolve at the
@@ -84,7 +84,7 @@ Many strategies exist for performing global optimization in
 conjunction with model potentials or first-principles total energy
 frameworks. Among these, stoichastic methods such as random search\cite{pickard2011} and
 basin hopping (BH)\cite{wales1997} are widely used and more advanced methods based on
-evolutionary algorithms (EA) are becoming increasingly popular.\cite{johnston2003} Common
+evolutionary algorithms (EA) are becoming increasingly popular.\cite{johnston2003,Oganov2006,Bhattacharya2013} Common
 to these methods is the need for the perturbative update steps
 followed by local relaxation and evaluation of whether or not to
 retain the new structure. The nature of the perturbation steps ranges
@@ -92,8 +92,8 @@ from a mere rattling of the atomic positions to highly advanced
 cross-over operations in which the atomic structures of several known
 systems are combined.\cite{ho1995} The exploration of configuration space is
 ensured by the very stochastic nature of these updates,\cite{mathias2018} yet updates
-that are too random will lead to rejection of the locally
-relaxed structure too often and hence cause slow convergence. The atomic
+that are too random will too often lead to rejection of the locally
+relaxed structure and hence cause slow convergence. The atomic
 displacement amplitude in a rattling update is a good example of
 this. The amplitude must be kept small and sometimes only apply to a
 subset of the atoms, as the new structural candidates otherwise become
@@ -110,7 +110,7 @@ assigned to a cluster, we evaluate for a given structure the sum of
 the distances of the atoms from their respective
 cluster centers in feature space. This structure specific scalar measure of distance to
 cluster centers is demonstrated to correlate with the structure
-stability -- the lower the distance measure, the more likely that the
+stability -- the smaller the distance measure, the more likely that the
 structure is more stable. As a consequence, minimizing the cluster distance measure
 contains an element of bringing a structure into a region of
 configuration space that is expectedly more stable. The minimization
@@ -173,7 +173,7 @@ the energy gradient). A population of $N_\mathrm{pop}=20$ parent structures
 is maintained, and new candidates are tested one at a time.
 The relaxed offspring structures are included in the population
 according to their fitness evaluated as the negative of the DFTB energy.
-More details on the EA are given in refs \cite{Vilhelmsen2012, Vilhelmsen2014}.
+More details on the EA are given in Refs. \cite{Vilhelmsen2012, Vilhelmsen2014}.
 
 The cluster regularization method proposed in this work is implemented
 as a mutation operation and its usefulness is gauged by comparing an
@@ -183,7 +183,7 @@ also test the method in a basin hopping (BH) framework,\cite{wales1997} in which
 perturbing update step alternates with a local energy relaxation step.
 
 \subsection{Machine learning techniques}
-Our method uses two components of general machine learning techniques:
+Machine learning techniques are becoming popular tools for various tasks in chemical physics.\cite{Rupp2012,Bartok2013,Hansen2013,Li2015,Botu2015,Khorshidi2016,Alexandrova2016,Schutt2017,Parkhill2017,Patra2017} Our method uses two components of general machine learning techniques:
 the representation of the data with a feature vector, and the
 classification of the data utilizing clustering methods.
 
@@ -194,7 +194,7 @@ invariance with respect to symmetries obeyed by the total energy
 operator, i.e.\ the Hamiltonian.\cite{Bartok2013} The symmetries are those of translation
 or rotation of the entire system or the permutation of the order of
 atoms with the same chemical identity. Without a symmetry invariant
-representation, e.g.\ using cartesian coordinates, a certain structure
+representation, e.g.\ using Cartesian coordinates, a certain structure
 will have a finite distance to for instance a translated copy of
 itself, even though the two systems will have identical physical
 properties. However, when measured in a proper feature space, two such
@@ -492,7 +492,10 @@ regularization and 0\% cut-and-splice, and 0\% rattle mutation).
 \begin{figure}[!hb]
     \centering
     \includegraphics[width=1.0\columnwidth]{fig7-success.pdf}
-    \caption{Cumulative success rates for 2, 3 and 4 layer TiO$_2$ systems.}
+    \caption{Cumulative success rates for a) 2-layer, b) 3-layer, and c) 4-layer TiO$_2$ systems. Benchmark runs (yellow) use 59\% cut-and-splice and
+41\% rattle mutation. All-cluster runs ("Cluster reg.", orange) use 100\% cluster
+regularization mutation. Combined runs (red) use 70\% cluster regularization, 28\% cut-and-splice, and 2\%
+rattle mutation in the GA updates.}
     \label{fig_success}
 \end{figure}
 
@@ -557,19 +560,30 @@ We acknowledge support from the Danish Council for Independent Research | Natura
 \bibitem{anatase2}M.\ Lazzeri and A.\ Selloni, Phys.\ Rev.\ Lett.\ \textbf{87}, 266105 (2001).
 \bibitem{rutile1}X.\ Gong, N.\ Khorshidi, A.\ Stierle, V.\ Vonk, C.\ Ellinger, H.\ Dosch, H.\ Cheng, A.\ Selloni, Y.\ He, O.\ Dulub, U.\ Diebold, Surf.\ Sci.\ \textbf{603} 138-144 (2009).
 \bibitem{rutile2}R.\ Bechstein, H.\ H.\ Kristoffersen, L.\ B.\ Vilhelmsen, F.\ Rieboldt, J.\ Stausholm-M{\o}ller, S.\ Wendt, B.\ Hammer, and F.\ Besenbacher, Phys.\ Rev.\ Lett.\ \textbf{108}, 236103 (2012).
-\bibitem{pickard2011}  {Ab initio random structure searching} Chris J. Pickard and R. J. Needs. J. Phys.: Condens. Matter \textbf{23} (2011) 053201 (23pp) DOI:10.1088/0953-8984/23/5/053201
+\bibitem{pickard2011}  C. J. Pickard and R. J. Needs. J. Phys.: Condens. Matter \textbf{23} (2011) 053201 (23pp) DOI:10.1088/0953-8984/23/5/053201
 \bibitem{wales1997}D.\ J.\ Wales, J.\ Phys.\ Chem.\ A \textbf{101}, 5111 (1997).
 \bibitem{johnston2003}R.\ L.\ Johnston, Dalton Trans.\ \textbf{22}, 4193 (2003).
+\bibitem{Oganov2006}A. R. Oganov and C. W. Glass, J. Chem. Phys. \textbf{124}, 244704 (2006).
+\bibitem{Bhattacharya2013}S. Bhattacharya, S. V. Levchenko, L. M. Ghiringhelli, and M. Scheffler, Phys. Rev. Lett. \textbf{111}, 135501 (2013).
 \bibitem{ho1995}D.\ M.\ Deaven and K.\ M.\ Ho, Phys.\ Rev.\ Lett.\ \textbf{75}, 288 (1995).
 \bibitem{mathias2018}M.\ S.\ J{\o}rgensen, U.\ F.\ Larsen, K.\ W.\ Jacobsen, and B.\ Hammer, J.\ Phys.\ Chem.\ A, \textit{Just accepted}. DOI: 10.1021/acs.jpca.8b00160
-\bibitem{dolgonos2010}G. Dolgonos, B. Aradi, N. H. Moreira, and T. Frauenheim, {An Improved Self-Consistent-Charge Density-Functional Tight-Binding (SCC-DFTB) Set of Parameters for Simulation of Bulk and Molecular Systems Involving Titanium}, J. Chem. Theory Comput. \textbf{6}, 266-278 (2010).
-\bibitem{Selli2017a}D. Selli, G. Fazio, G. Seifert, and C. D. Valentin, {Water Multilayers on TiO$_2$ (101) Anatase Surfaces: Assessment of a DFTB-Based Method}, J. Chem. Theory Comput. \textbf{13}, 3862-3873 (2017).
-\bibitem{Selli2017b}D. Selli, G. Fazio, and C. D. Valentin, {Modelling Realistic TiO$_2$ Nanospheres: A Benchmark Study of SCC-DFTB Against Hybrid DFT}, J. Chem. Phys. \textbf{147}, 164701 (2017).
+\bibitem{dolgonos2010}G. Dolgonos, B. Aradi, N. H. Moreira, and T. Frauenheim, J. Chem. Theory Comput. \textbf{6}, 266-278 (2010).
+\bibitem{Selli2017a}D. Selli, G. Fazio, G. Seifert, and C. D. Valentin, J. Chem. Theory Comput. \textbf{13}, 3862-3873 (2017).
+\bibitem{Selli2017b}D. Selli, G. Fazio, and C. D. Valentin, J. Chem. Phys. \textbf{147}, 164701 (2017).
 \bibitem{ase2}A.\ H.\ Larsen \textit{et al.}, J. Phys. Condens. Matter \textbf{29}, 273002 (2017).
 \bibitem{Vilhelmsen2012}L. B. Vilhelmsen and B. Hammer, Phys. Rev. Lett. \textbf{108}, 126101 (2012).
 \bibitem{Vilhelmsen2014}L. B.\ Vilhelmsen and B.\ Hammer, J. Chem. Phys. \textbf{141}, 044711 (2014).
+\bibitem{Rupp2012} M. Rupp, A. Tkatchenko, K.-R. M\"{u}ller, and O. A. von Lilienfeld, Phys. Rev. Lett. \textbf{108}, 058301 (2012). 
 \bibitem{Bartok2013} A.\ P.\ Bartok, R.\ Kondor, and G.\ Csanyi, Phys.\ Rev.\ B \textbf{87}, 184114 (2013).
-\bibitem{bag_of_bonds}K.\ Hansen, F.\ Biegler, R.\ Ramakrishnan, W.\ Pronobis, O.\ A.\ von Lilienfeld, K.-R.\ M{\"u}ller, A.\ Tkatchenko, Machine Learning Predictions of Molecular Properties: Accurate Many-Body Potentials and Nonlocality in Chemical Space. J. Phys. Chem. Lett. \textbf{6}, 2326−2331 (2015).
+\bibitem{Hansen2013}K. Hansen \textit{et al}., J. Chem. Theory Comput. \textbf{9}, 2404 (2013).
+\bibitem{Li2015}Z. Li, J. R. Kermode, and A. De Vita, Phys. Rev. Lett. \textbf{114}, 096405 (2015).
+\bibitem{Botu2015} V. Botu and R. Ramprasad, Int. J. Quantum Chem. \textbf{115}, 1075-18083 (2015). DOI:10.1002/qua.24836 
+\bibitem{Khorshidi2016}A. Khorshidi and A. A. Peterson, Comput. Phys. Commun. \textbf{207}, 310 (2016).
+\bibitem{Alexandrova2016}H. Zhai and A. N. Alexandrova, J. Chem. Theory Comput. \textbf{12}, 6213-6226 (2016).
+\bibitem{Schutt2017}K. T. Sch\"{u}tt, F. Arbabzadah, S. Chmiela, K. R. M\"{u}ller, and A. Tkatchenko, Nat. Commun. \textbf{8}, 13890 (2017).
+\bibitem{Parkhill2017}K.\ Yao, J.\ E.\ Herr, S.\ N.\ Brown, and J.\ Parkhill, J.\ Phys.\ Chem.\ Lett.\ \textbf{8}, 2689 (2017).
+\bibitem{Patra2017}T. K. Patra, V. Meenakshisundaram, J.-H. Hung and D. S. Simmons, ACS Comb. Sci. \textbf{19}, 96 (2017).
+\bibitem{bag_of_bonds}K.\ Hansen, F.\ Biegler, R.\ Ramakrishnan, W.\ Pronobis, O.\ A.\ von Lilienfeld, K.-R.\ M{\"u}ller, A.\ Tkatchenko, J. Phys. Chem. Lett. \textbf{6}, 2326−2331 (2015).
 \bibitem{finger_print}A. R. Oganov and C. W. Glass, J. Chem. Phys. \textbf{124}, 244704 (2006)
 \bibitem{finger_print_application}T.\ L.\ Jacobsen, M.\ S.\ J{\o}rgensen, and B.\ Hammer, Phys.\ Rev.\ Lett.\ \textbf{120} 026102 (2018).
 \bibitem{coulomb_matrix1} J. E. Moussa, Phys. Rev. Lett. \textbf{109}, 059801 (2012).
@@ -578,11 +592,10 @@ We acknowledge support from the Danish Council for Independent Research | Natura
 \bibitem{behler_parrinello}J.\ Behler and M.\ Parrinello, Phys.\ Rev.\ Lett.\ \textbf{98}, 146401 (2007).
 \bibitem{baml}B.\ Huang and O.\ A.\ von Lilienfeld, J.\ Chem.\ Phys.\ \textbf{145}, 161102 (2016).
 \bibitem{dihedral_representation}F.\ A.\ Faber, L.\ Hutchison, B.\ Huang, J.\ Gilmer, S.\ S.\ Schoenholz, G.\ E.\ Dahl, O.\ Vinyals, S.\ Kearnes, P.\ F.\ Riley, and O.\ A.\ von Lilienfeld, J.\ Chem.\ Theory Comput.\ \textbf{13}, 5255-5264 (2017)
-\bibitem{Botu2015} {Adaptive Machine Learning Framework to Accelerate Ab Initio Molecular Dynamics.} V. Botu and R. Ramprasad, Int. J. Quantum Chem. \textbf{115}, 1075-18083 (2015). DOI:10.1002/qua.24836 
-\bibitem{Gilbert2006} K. M. Gilbert and C. A. Venanzi, {Hierarchical Clustering Analysis of Flexible GBR 12909 Dialkyl Piperazine and Piperidine Analogs}, J. Comput. Aided Mol. Des. \textbf{20}, 209-225 (2006).  
-\bibitem{Duan2010} L. L. Duan, Y. Mei, D. Zhang, Q. G. Zhang, and J. Z. H. Zhang, {Folding of a Helix at Room Temperature is Critically Aided by Electrostatic Polarization of Intraprotein Hydrogen Bonds}, J. Am. Chem. Soc. \textbf{132}, 11159-11164 (2010).
-\bibitem{Chema2003} D. Chema and A. Goldblum, {The "Nearest Single Neighbor" Method -- Finding Families of Conformations within a Sample}, J. Chem. Inf. Comput. Sci. \textbf{43}, 208-217 (2003). 
-\bibitem{Jorgensen2017} M. S. J{\o}rgensen, M. N. Groves, B. Hammer, {Combining Evolutionary Algorithms with Clustering toward Rational Global Structure Optimization at the Atomic Scale}, J. Chem. Theory Comput. \textbf{13}, 1486-1493 (2017). 
+\bibitem{Gilbert2006} K. M. Gilbert and C. A. Venanzi, J. Comput. Aided Mol. Des. \textbf{20}, 209-225 (2006).  
+\bibitem{Duan2010} L. L. Duan, Y. Mei, D. Zhang, Q. G. Zhang, and J. Z. H. Zhang, J. Am. Chem. Soc. \textbf{132}, 11159-11164 (2010).
+\bibitem{Chema2003} D. Chema and A. Goldblum, J. Chem. Inf. Comput. Sci. \textbf{43}, 208-217 (2003). 
+\bibitem{Jorgensen2017} M. S. J{\o}rgensen, M. N. Groves, B. Hammer, J. Chem. Theory Comput. \textbf{13}, 1486-1493 (2017). 
 \bibitem{Malay2009} {A Modified k-means Algorithm to Avoid Empty Clusters} Malay K. Pakhira, International Journal of Recent Trends in Engineering, Vol 1, No 1, May 2009
 \end{thebibliography}
 
