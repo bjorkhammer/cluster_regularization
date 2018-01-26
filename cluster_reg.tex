@@ -394,18 +394,41 @@ regularization takes place as a gradient based optimization using
 standard techniques. There is no guarantee or even expectation that the
 cluster regularization will directly perturb a given structure towards
 a lower energy structure, but the cluster distance-energy correlation
-in Fig.\ \ \ref{fig_corr} is suggestive that when moved according to (minus) the cluster distance gradient, a given structure may leave a meta-stable basin
+in Fig.\ \ref{fig_corr} is suggestive that when moved according to (minus) the cluster distance gradient, a given structure may leave a meta-stable basin
 region of the energy landscape and move into a more favorable
-basin in the energy landscape. The principle of the method is illustrated
-schematically in Fig.\  \ref{fig_schem}a, where transformations between real space and feature space enables the structure to escape local minima. Note that a local minimum in real space is only escaped if the local minimum in feature space takes the structure to another energy basin in real space. If this is not the case, the optimization will enter an equilibrium state between real space and feature space, and thus the structure will become trapped in one or more energy basins (Figs.\  \ref{fig_schem}b and c). In the following, we demonstrate the usefulness of
-the method in two different setups,
-either as the perturbation step in a basin hopping (BH) framework or as a
-possible perturbation step in an evolutionary search.
+basin in the energy landscape.
+
+The principle of the method is illustrated schematically in
+Fig.\ \ref{fig_schem}a, where transformations between real space and
+feature space enables the structure to escape local minima. Note that
+a local minimum in real space is only escaped if the local minimum in
+feature space takes the structure to another energy basin in real
+space. If this is not the case, the optimization will enter a
+dynamical equilibrium state between real space and feature space, and
+thus the structure will become trapped in one or more energy basins
+(Figs.\ \ref{fig_schem}b and c). In the following, we demonstrate the
+usefulness of the method in two different setups, either as the
+perturbation step in a basin hopping (BH) framework or as a possible
+perturbation step in an evolutionary search.
 
 \begin{figure*}[tb]
     \centering
     \includegraphics[width=2.0\columnwidth]{fig6-minimize.pdf}
-    \caption{Green lines and arrows indicate cluster distance (cd) minimization steps, and blue lines indicate DFTB+ relaxations. Here the first (bottom) layer is the template. While it is hard to see progress in individual minimization steps there are small details to notice in the plot. In the cd step from 16 to 17 the vacancy in the second layer is filled and in the cd step from 18 to 19 the two oxygen atoms in the top left corner are split up.}
+    \caption{Evolution of energy, cluster distance, and structures
+      during basin hopping updates using the cluster distance
+      regularization method as perturbation in the structural
+      updates. Green lines and arrows indicate cluster distance
+      minimization steps, while blue lines and arrows indicate energy
+      relaxations. a-c) Data for the same 25 iterations in one basin
+      hopping run. d) Structural illustrations for 10 selected
+      iterations from the same run. The progress in the individual
+      minimization steps are small and sometimes hard to
+      appreciate. However, from state 16 to 17 the cluster
+      regularization acts to fill the vacancy in the second layer and
+      from state 18 to 19 it splits up the two oxygen atoms present in
+      the top left corner. e-f) Structural illustrations of the
+      second-last and last states in basin hopping runs that led to
+      successful finding of the global minimum structure.}
     \label{fig_min}
 \end{figure*}
 
@@ -413,7 +436,7 @@ possible perturbation step in an evolutionary search.
 Figure \ref{fig_min} illustrates the outcome of the simplest
 conceivable way of using the cluster regularization, namely as the
 perturbing step in a basin hopping setup. In such a setup, the cluster
-centers entering eq \ref{eq4} are obtained by clustering the
+centers entering Eq.\ (\ref{eq4}) are obtained by clustering the
 atomic features present in the latest structure of the search. Figures
 \ref{fig_min}a-c illustrate how alternating cluster regularization
 steps (green color) and local relaxation, i.e.\ energy minimization,
