@@ -78,7 +78,7 @@ Si adatoms and restatoms and zig-zagging Si-dimers do for example evolve at the
 Si(111)-(7$\times$7) and Si(001)-c(4$\times$2) surfaces,\cite{si7x7,si4x2} respectively, but
 are otherwise not present in bulk Si or bulk-truncated Si surfaces. Likewise,
 rutile and anatase TiO$_2$ single-crystal surfaces are known to exhibit
-reconstructions and ad-structures,\cite{anatase1,rutile1,rutile2} that have no equivalent in any TiO$_2$ bulk or surface systems.
+reconstructions and ad-structures,\cite{anatase1,anatase2,rutile1,rutile2} that have no equivalent in any TiO$_2$ bulk or surface systems.
 
 Many strategies exist for performing global optimization in
 conjunction with model potentials or first-principles total energy
@@ -96,7 +96,7 @@ that are too random will lead to rejection of the locally
 relaxed structure too often and hence cause slow convergence. The atomic
 displacement amplitude in a rattling update is a good example of
 this. The amplitude must be kept small and sometimes only apply to a
-subset of the atoms, as the new structural candidate otherwise become
+subset of the atoms, as the new structural candidates otherwise become
 too unstable.
 
 The present work aims at formulating a means of performing a random
@@ -127,9 +127,9 @@ describe the required machine learning components of our method,
 including the choice of feature vector and the clustering technique.
 In the Feature Space Analysis section we analyse the data that forms the basis for formulating the cluster
 regularization method in the subsequent section. In the Global Structure Search Results
-section, the method is used in full scale global optimization in
+section, the method is used to conduct a full scale global optimization 
 search for the anatase TiO$_2$(001)-(1$\times$4) surface
-reconstruction. This section demonstrates the usefulness of the method
+reconstruction.\cite{anatase2} This section demonstrates the usefulness of the method
 and further investigates its efficacy as the number of unknown atomic
 position is increased in the global optimization. The papers ends with a summary section.
 
@@ -138,13 +138,13 @@ position is increased in the global optimization. The papers ends with a summary
 \subsection{Density functional tight-binding theory}
 Density functional tight-binding (DFTB) theory calculations were
 performed for TiO$_2$ structures using parameters from ref \cite{dolgonos2010}. Self-consistent charge DFTB calculations for TiO$_2$ systems have previously been conducted
-successfully in studies where either the system size or the number of calculations is too large for a full first principles density functional theory (DFT) study \cite{Selli2017a, Selli2017b}. In this study, we choose not to include the self-consistent charge correction in order to further increase the computation speed. The loss of accuracy in using DFTB over DFT is not of significant importance because our goal is to enhance global structure optimization, and not that of finding exact geometries. In the present work, we
+successfully in studies where either the system size or the number of calculations is too large for a full first principles density functional theory (DFT) study \cite{Selli2017a, Selli2017b}. In this study, we choose not to include the self-consistent charge correction in order to further increase the computational speed. The loss of accuracy in using DFTB over DFT is not of significant importance because our goal is to enhance global structure optimization, and not that of finding exact geometries. In the present work, we
 employ 2D periodic super cells accomodating the anatase TiO$_2$(001)
-surface with (4$\times$1) periodicity with lattice parameters $a=3.94$ {\AA} and $c=9.47$ {\AA}. Slabs of three different
+surface with (1$\times$4) periodicity with lattice parameters $a=3.94$ {\AA} and $c=9.47$ {\AA}. Slabs of three different
 thicknesses were considered, containing two, three, or four layers of
 atoms. The three-layer system is illustrated in Figure \ref{figintro},
-showing the template of four static TiO$_2$ units, two examples of
-disordered structures with nine extra TiO$_2$ units added, and the
+showing the template of four static TiO$_2$ units, examples of
+two disordered and one ordered structure with nine extra TiO$_2$ units added, the latter being the
 global minimum energy structure with three well ordered atomic layers
 and one extra row of TiO$_2$ protruding out of the surface.
 \begin{figure}[tb]
@@ -155,17 +155,17 @@ and one extra row of TiO$_2$ protruding out of the surface.
       a) The template of four TiO$_2$ units.
       b-c) Two examples of intermediate structures from an evolutionary search. Nine TiO$_2$ units
       have been placed on the template.
-      d) The sought-after global minimum structure for the anatase TiO$_2$(001)-(1$\times$4) surface.
+      d) The sought-after "3-layer" global minimum structure for the anatase TiO$_2$(001)-(1$\times$4) surface.
     }
     \label{figintro}
 \end{figure}
 
 \subsection{Evolutionary algorithm}
-The disordered structures in Figure \ref{figintro} are snapshots from
+The disordered structures in Figs \ref{figintro}b-c are snapshots from
 search runs performed with the evolutionary algorithm (EA) available
 in the Atomic Simulation Environment (ASE)\cite{ase2}.  The EA
 iteratively improves the positions of the atoms atop the template
-structure (Figure \ref{figintro}a) using cross-over operations
+structure (Fig.\ \ref{figintro}a) using cross-over operations
 combining two parent structures or mutation operations applied to
 single parent structures. The resulting offspring structures undergo
 local relaxation within DFTB following the atomic forces (i.e.,\ the negative of
@@ -205,7 +205,7 @@ the chemical physics literature. Global feature vectors of entire
 systems include the bag-of-bonds\cite{bag_of_bonds} and fingerprint\cite{finger_print,finger_print_application} feature
 vectors, that are composed of either a sorted list or a histogram of
 all interatomic distances in the compounds, but also more
-sophisticated methods such as the Coulomb matrix\cite{coulomb_matrix} have been
+sophisticated methods such as the Coulomb matrix\cite{coulomb_matrix1,coulomb_matrix2} have been
 proposed.
 
 Atom-specific feature vectors representing the local
@@ -281,14 +281,13 @@ $N$ atomic positions. As such, a continuous
 atomic positions may be changed towards an overall smaller cluster
 distance by following the negative of the gradient of the cluster distance with
 respect to the atomic positions, $\mathbf{R}$:
-\begin{equation}
+\begin{equation}\label{eq_deriv}
 -\nabla_\mathbf{R} D_S =-\frac{1}{2}\sum_{Z \in \left\{ Z^O \atop Z^{Ti}\right\} }\sum_{i \in S} \left(\nabla_\mathbf{R}\rho_i^Z\right)
 \frac{\partial}{\partial\rho_i^Z}\left|\mathbf f_i- \mathbf c_{k(i)}\right|
 \end{equation}
-
 where the cluster centers are kept fixed. This is analogous to the
 atomic forces directing the minimization of the energy in the energy
-landscape. The initial factor $\frac{1}{2}$ is correcting for the double counting in in eq. \ref{eq1}.
+landscape. The initial factor $\frac{1}{2}$ originates from the double sums over all atoms appearing when Eq.\ (\ref{eq1}) is inserted in Eq.\ (\ref{eq_deriv}).
 
 \section{Feature space analysis}
 
@@ -311,7 +310,14 @@ ratio of neighboring atoms of the two possible types.
 \begin{figure}[tb]
     \centering
     \includegraphics[width=1.0\columnwidth]{fig2-gm_scatterplot.pdf}
-    \caption{Visualization of global minimum for Ti$_{13}$O$_{26}$ structures in feature space}   
+    \caption{Visualization of global minimum for three-layer TiO$_2$
+      structures (Ti$_{13}$O$_{26}$) in feature space. Feature vectors
+      are shown in the
+      $\left(\rho_i^{Z^\mathrm{O}},\rho_i^{Z^\mathrm{Ti}}\right)$-plane
+        and the $Z_i$-dimension which can only assume two values,
+        either $Z^\mathrm{O}$ or $Z^\mathrm{Ti}$ is color coded, red meaning $Z^\mathrm{O}$ (oxygen),
+        grey meaning $Z^\mathrm{Ti}$ (titanium). The insets are representative
+      local structures at given positions in feature space.}
     \label{fig_global}
 \end{figure}
 
@@ -320,7 +326,8 @@ ratio of neighboring atoms of the two possible types.
 \begin{figure}[tb]
     \centering
     \includegraphics[width=1.0\columnwidth]{fig3-scatterplot.pdf}
-    \caption{Visualization of atoms from 1019 Ti$_{13}$O$_{26}$ structures in feature space}   
+    \caption{Visualization of atoms from 1019 Ti$_{13}$O$_{26}$ structures in feature space. Shown as in Fig.\ \protect\ref{fig_global}. Every vector is
+marked with a transparent symbol. In regions with many vectors, the symbols add up to a darker contrast.}
     \label{fig_feature}
 \end{figure}
 
@@ -524,6 +531,7 @@ We acknowledge support from the Danish Council for Independent Research | Natura
 \bibitem{si7x7}K.\ Takayanagi, Y.\ Tanishiro, S.\ Takahashi, and M.\ Takahashi, Surf.\ Sci.\ \textbf{164}, 367 (1985).
 \bibitem{si4x2}K.\ C.\ Low and C.\ K.\ Ong, Phys.\ Rev.\ B \textbf{50}, 5352-5357 (1994).
 \bibitem{anatase1}U.\ Diebold, Surf.\ Sci.\ Rep.\ \textbf{48}, 53-229 (2002).
+\bibitem{anatase2}M.\ Lazzeri and A.\ Selloni, Phys.\ Rev.\ Lett.\ \textbf{87}, 266105 (2001).
 \bibitem{rutile1}X.\ Gong, N.\ Khorshidi, A.\ Stierle, V.\ Vonk, C.\ Ellinger, H.\ Dosch, H.\ Cheng, A.\ Selloni, Y.\ He, O.\ Dulub, U.\ Diebold, Surf.\ Sci.\ \textbf{603} 138-144 (2009).
 \bibitem{rutile2}R.\ Bechstein, H.\ H.\ Kristoffersen, L.\ B.\ Vilhelmsen, F.\ Rieboldt, J.\ Stausholm-M{\o}ller, S.\ Wendt, B.\ Hammer, and F.\ Besenbacher, Phys.\ Rev.\ Lett.\ \textbf{108}, 236103 (2012).
 \bibitem{pickard2011}  {Ab initio random structure searching} Chris J. Pickard and R. J. Needs. J. Phys.: Condens. Matter \textbf{23} (2011) 053201 (23pp) DOI:10.1088/0953-8984/23/5/053201
