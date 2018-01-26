@@ -185,7 +185,7 @@ perturbing update step alternates with a local energy relaxation step.
 \subsection{Machine learning techniques}
 Machine learning techniques are becoming popular tools for various tasks in chemical physics.\cite{Rupp2012,Bartok2013,Hansen2013,Li2015,Botu2015,Khorshidi2016,Alexandrova2016,Schutt2017,Parkhill2017,Patra2017} Our method uses two components of general machine learning techniques:
 the representation of the data with a feature vector, and the
-classification of the data utilizing clustering methods. Several other 
+classification of the data utilizing clustering methods.
 
 \subsubsection{Feature vector}
 Feature vector representations of the atomic structure of molecules,
@@ -394,18 +394,41 @@ regularization takes place as a gradient based optimization using
 standard techniques. There is no guarantee or even expectation that the
 cluster regularization will directly perturb a given structure towards
 a lower energy structure, but the cluster distance-energy correlation
-in Fig.\ \ \ref{fig_corr} is suggestive that when moved according to (minus) the cluster distance gradient, a given structure may leave a meta-stable basin
+in Fig.\ \ref{fig_corr} is suggestive that when moved according to (minus) the cluster distance gradient, a given structure may leave a meta-stable basin
 region of the energy landscape and move into a more favorable
-basin in the energy landscape. The principle of the method is illustrated
-schematically in Fig.\  \ref{fig_schem}a, where transformations between real space and feature space enables the structure to escape local minima. Note that a local minimum in real space is only escaped if the local minimum in feature space takes the structure to another energy basin in real space. If this is not the case, the optimization will enter an equilibrium state between real space and feature space, and thus the structure will become trapped in one or more energy basins (Figs.\  \ref{fig_schem}b and c). In the following, we demonstrate the usefulness of
-the method in two different setups,
-either as the perturbation step in a basin hopping (BH) framework or as a
-possible perturbation step in an evolutionary search.
+basin in the energy landscape.
+
+The principle of the method is illustrated schematically in
+Fig.\ \ref{fig_schem}a, where transformations between real space and
+feature space enables the structure to escape local minima. Note that
+a local minimum in real space is only escaped if the local minimum in
+feature space takes the structure to another energy basin in real
+space. If this is not the case, the optimization will enter a
+dynamical equilibrium state between real space and feature space, and
+thus the structure will become trapped in one or more energy basins
+(Figs.\ \ref{fig_schem}b and c). In the following, we demonstrate the
+usefulness of the method in two different setups, either as the
+perturbation step in a basin hopping (BH) framework or as a possible
+perturbation step in an evolutionary search.
 
 \begin{figure*}[tb]
     \centering
     \includegraphics[width=2.0\columnwidth]{fig6-minimize.pdf}
-    \caption{Green lines and arrows indicate cluster distance (cd) minimization steps, and blue lines indicate DFTB+ relaxations. Here the first (bottom) layer is the template. While it is hard to see progress in individual minimization steps there are small details to notice in the plot. In the cd step from 16 to 17 the vacancy in the second layer is filled and in the cd step from 18 to 19 the two oxygen atoms in the top left corner are split up.}
+    \caption{Evolution of energy, cluster distance, and structures
+      during basin hopping updates using the cluster distance
+      regularization method as perturbation in the structural
+      updates. Green lines and arrows indicate cluster distance
+      minimization steps, while blue lines and arrows indicate energy
+      relaxations. a-c) Data for the same 25 iterations in one basin
+      hopping run. d) Structural illustrations for 10 selected
+      iterations from the same run. The progress in the individual
+      minimization steps are small and sometimes hard to
+      appreciate. However, from state 16 to 17 the cluster
+      regularization acts to fill the vacancy in the second layer and
+      from state 18 to 19 it splits up the two oxygen atoms present in
+      the top left corner. e-f) Structural illustrations of the
+      second-last and last states in basin hopping runs that led to
+      successful finding of the global minimum structure.}
     \label{fig_min}
 \end{figure*}
 
@@ -413,7 +436,7 @@ possible perturbation step in an evolutionary search.
 Figure \ref{fig_min} illustrates the outcome of the simplest
 conceivable way of using the cluster regularization, namely as the
 perturbing step in a basin hopping setup. In such a setup, the cluster
-centers entering Eq. \ref{eq4} are obtained by clustering the
+centers entering Eq.\ (\ref{eq4}) are obtained by clustering the
 atomic features present in the latest structure of the search. Figures
 \ref{fig_min}a-c illustrate how alternating cluster regularization
 steps (green color) and local relaxation, i.e.\ energy minimization,
@@ -464,7 +487,7 @@ compares to a BHO result of 59\% cut-and-splice and
 latter parameters were used for benchmark runs. In order to gauge the efficiency of
 the cluster regularization method on its own we further did EA runs
 using that method exclusively (i.e.\ having 100\% cluster
-regularization and 0\% cut-and-splice and 0\% rattle mutation).
+regularization and 0\% cut-and-splice, and 0\% rattle mutation).
 
 \begin{figure}[!hb]
     \centering
@@ -482,7 +505,7 @@ rattle mutation in the GA updates.}
 The three EA settings -- benchmark, all-cluster regularization, and
 combined -- were tested for two-, three-, and four-layer TiO$_2$
 systems. The results are presented in Fig.\  \ref{fig_success} which
-plot the accumulated success rates of XX restarts of the EA. Note that
+plot the accumulated success rates of 300, 300, and 600 restarts of the EA for the three system sizes, respectively. Note that
 the number of required attempts (measured on the $x$-axis) changes as
 the system size increases.
 
@@ -499,7 +522,7 @@ number of structures (essentially most of the population members).
 
 By resorting to the combined method, where the cluster regularization
 method is used with its optimum 70\% likelihood, the overall best
-performance is reached for all three systems (red curves). The
+performance is reached for all three system sizes (red curves). The
 combined method still exhibits a much sooner onset of finding the global energy
 minimum structure than the benchmark runs, and no signs of stagnation are seen.
 
@@ -537,7 +560,7 @@ We acknowledge support from the Danish Council for Independent Research | Natura
 \bibitem{anatase2}M.\ Lazzeri and A.\ Selloni, Phys.\ Rev.\ Lett.\ \textbf{87}, 266105 (2001).
 \bibitem{rutile1}X.\ Gong, N.\ Khorshidi, A.\ Stierle, V.\ Vonk, C.\ Ellinger, H.\ Dosch, H.\ Cheng, A.\ Selloni, Y.\ He, O.\ Dulub, U.\ Diebold, Surf.\ Sci.\ \textbf{603} 138-144 (2009).
 \bibitem{rutile2}R.\ Bechstein, H.\ H.\ Kristoffersen, L.\ B.\ Vilhelmsen, F.\ Rieboldt, J.\ Stausholm-M{\o}ller, S.\ Wendt, B.\ Hammer, and F.\ Besenbacher, Phys.\ Rev.\ Lett.\ \textbf{108}, 236103 (2012).
-\bibitem{pickard2011} Chris J. Pickard and R. J. Needs. J. Phys.: Condens. Matter \textbf{23} (2011) 053201 (23pp) DOI:10.1088/0953-8984/23/5/053201
+\bibitem{pickard2011}  C. J. Pickard and R. J. Needs. J. Phys.: Condens. Matter \textbf{23} (2011) 053201 (23pp) DOI:10.1088/0953-8984/23/5/053201
 \bibitem{wales1997}D.\ J.\ Wales, J.\ Phys.\ Chem.\ A \textbf{101}, 5111 (1997).
 \bibitem{johnston2003}R.\ L.\ Johnston, Dalton Trans.\ \textbf{22}, 4193 (2003).
 \bibitem{Oganov2006}A. R. Oganov and C. W. Glass, J. Chem. Phys. \textbf{124}, 244704 (2006).
@@ -553,7 +576,7 @@ We acknowledge support from the Danish Council for Independent Research | Natura
 \bibitem{Rupp2012} M. Rupp, A. Tkatchenko, K.-R. M\"{u}ller, and O. A. von Lilienfeld, Phys. Rev. Lett. \textbf{108}, 058301 (2012). 
 \bibitem{Bartok2013} A.\ P.\ Bartok, R.\ Kondor, and G.\ Csanyi, Phys.\ Rev.\ B \textbf{87}, 184114 (2013).
 \bibitem{Hansen2013}K. Hansen \textit{et al}., J. Chem. Theory Comput. \textbf{9}, 2404 (2013).
-\bibitem{Li2015}Z. Li, J. R. Kermode, and A. De Vita, Phys. Rev. Lett. \textbf{114}, 096405 (2015).	
+\bibitem{Li2015}Z. Li, J. R. Kermode, and A. De Vita, Phys. Rev. Lett. \textbf{114}, 096405 (2015).
 \bibitem{Botu2015} V. Botu and R. Ramprasad, Int. J. Quantum Chem. \textbf{115}, 1075-18083 (2015). DOI:10.1002/qua.24836 
 \bibitem{Khorshidi2016}A. Khorshidi and A. A. Peterson, Comput. Phys. Commun. \textbf{207}, 310 (2016).
 \bibitem{Alexandrova2016}H. Zhai and A. N. Alexandrova, J. Chem. Theory Comput. \textbf{12}, 6213-6226 (2016).
