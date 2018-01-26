@@ -71,7 +71,7 @@ molecular building blocks and crystal structures can be used to direct
 the starting points for the searches.\cite{hafner2006} However, many problems exist for
 which the structural motifs in the sought-after structures have no
 analogues in known structures, and where global optimization must be
-employed. A prominent example of this is that of surface relaxations,
+employed. A prominent example of this is that of surface reconstructions,
 which often exhibit structural motifs that are unique to a chemical
 composition, crystaline polymorph, and surface orientation. Monomeric
 Si adatoms and restatoms and zig-zagging Si-dimers do for example evolve at the
@@ -92,8 +92,8 @@ from a mere rattling of the atomic positions to highly advanced
 cross-over operations in which the atomic structures of several known
 systems are combined.\cite{ho1995} The exploration of configuration space is
 ensured by the very stochastic nature of these updates,\cite{mathias2018} yet updates
-that are too random will lead to rejection of the locally
-relaxed structure too often and hence cause slow convergence. The atomic
+that are too random will too often lead to rejection of the locally
+relaxed structure and hence cause slow convergence. The atomic
 displacement amplitude in a rattling update is a good example of
 this. The amplitude must be kept small and sometimes only apply to a
 subset of the atoms, as the new structural candidates otherwise become
@@ -110,7 +110,7 @@ assigned to a cluster, we evaluate for a given structure the sum of
 the distances of the atoms from their respective
 cluster centers in feature space. This structure specific scalar measure of distance to
 cluster centers is demonstrated to correlate with the structure
-stability -- the lower the distance measure, the more likely that the
+stability -- the smaller the distance measure, the more likely that the
 structure is more stable. As a consequence, minimizing the cluster distance measure
 contains an element of bringing a structure into a region of
 configuration space that is expectedly more stable. The minimization
@@ -492,7 +492,10 @@ regularization and 0\% cut-and-splice, and 0\% rattle mutation).
 \begin{figure}[!hb]
     \centering
     \includegraphics[width=1.0\columnwidth]{fig7-success.pdf}
-    \caption{Cumulative success rates for 2, 3 and 4 layer TiO$_2$ systems.}
+    \caption{Cumulative success rates for a) 2-layer, b) 3-layer, and c) 4-layer TiO$_2$ systems. Benchmark runs (yellow) use 59\% cut-and-splice and
+41\% rattle mutation. All-cluster runs ("Cluster reg.", orange) use 100\% cluster
+regularization mutation. Combined runs (red) use 70\% cluster regularization, 28\% cut-and-splice, and 2\%
+rattle mutation in the GA updates.}
     \label{fig_success}
 \end{figure}
 
