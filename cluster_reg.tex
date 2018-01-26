@@ -194,7 +194,7 @@ invariance with respect to symmetries obeyed by the total energy
 operator, i.e.\ the Hamiltonian.\cite{Bartok2013} The symmetries are those of translation
 or rotation of the entire system or the permutation of the order of
 atoms with the same chemical identity. Without a symmetry invariant
-representation, e.g.\ using cartesian coordinates, a certain structure
+representation, e.g.\ using Cartesian coordinates, a certain structure
 will have a finite distance to for instance a translated copy of
 itself, even though the two systems will have identical physical
 properties. However, when measured in a proper feature space, two such
@@ -394,41 +394,18 @@ regularization takes place as a gradient based optimization using
 standard techniques. There is no guarantee or even expectation that the
 cluster regularization will directly perturb a given structure towards
 a lower energy structure, but the cluster distance-energy correlation
-in Fig.\ \ref{fig_corr} is suggestive that when moved according to (minus) the cluster distance gradient, a given structure may leave a meta-stable basin
+in Fig.\ \ \ref{fig_corr} is suggestive that when moved according to (minus) the cluster distance gradient, a given structure may leave a meta-stable basin
 region of the energy landscape and move into a more favorable
-basin in the energy landscape.
-
-The principle of the method is illustrated schematically in
-Fig.\ \ref{fig_schem}a, where transformations between real space and
-feature space enables the structure to escape local minima. Note that
-a local minimum in real space is only escaped if the local minimum in
-feature space takes the structure to another energy basin in real
-space. If this is not the case, the optimization will enter a
-dynamical equilibrium state between real space and feature space, and
-thus the structure will become trapped in one or more energy basins
-(Figs.\ \ref{fig_schem}b and c). In the following, we demonstrate the
-usefulness of the method in two different setups, either as the
-perturbation step in a basin hopping (BH) framework or as a possible
-perturbation step in an evolutionary search.
+basin in the energy landscape. The principle of the method is illustrated
+schematically in Fig.\  \ref{fig_schem}a, where transformations between real space and feature space enables the structure to escape local minima. Note that a local minimum in real space is only escaped if the local minimum in feature space takes the structure to another energy basin in real space. If this is not the case, the optimization will enter an equilibrium state between real space and feature space, and thus the structure will become trapped in one or more energy basins (Figs.\  \ref{fig_schem}b and c). In the following, we demonstrate the usefulness of
+the method in two different setups,
+either as the perturbation step in a basin hopping (BH) framework or as a
+possible perturbation step in an evolutionary search.
 
 \begin{figure*}[tb]
     \centering
     \includegraphics[width=2.0\columnwidth]{fig6-minimize.pdf}
-    \caption{Evolution of energy, cluster distance, and structures
-      during basin hopping updates using the cluster distance
-      regularization method as perturbation in the structural
-      updates. Green lines and arrows indicate cluster distance
-      minimization steps, while blue lines and arrows indicate energy
-      relaxations. a-c) Data for the same 25 iterations in one basin
-      hopping run. d) Structural illustrations for 10 selected
-      iterations from the same run. The progress in the individual
-      minimization steps are small and sometimes hard to
-      appreciate. However, from state 16 to 17 the cluster
-      regularization acts to fill the vacancy in the second layer and
-      from state 18 to 19 it splits up the two oxygen atoms present in
-      the top left corner. e-f) Structural illustrations of the
-      second-last and last states in basin hopping runs that led to
-      successful finding of the global minimum structure.}
+    \caption{Green lines and arrows indicate cluster distance (cd) minimization steps, and blue lines indicate DFTB+ relaxations. Here the first (bottom) layer is the template. While it is hard to see progress in individual minimization steps there are small details to notice in the plot. In the cd step from 16 to 17 the vacancy in the second layer is filled and in the cd step from 18 to 19 the two oxygen atoms in the top left corner are split up.}
     \label{fig_min}
 \end{figure*}
 
@@ -436,7 +413,7 @@ perturbation step in an evolutionary search.
 Figure \ref{fig_min} illustrates the outcome of the simplest
 conceivable way of using the cluster regularization, namely as the
 perturbing step in a basin hopping setup. In such a setup, the cluster
-centers entering Eq.\ (\ref{eq4}) are obtained by clustering the
+centers entering Eq. \ref{eq4} are obtained by clustering the
 atomic features present in the latest structure of the search. Figures
 \ref{fig_min}a-c illustrate how alternating cluster regularization
 steps (green color) and local relaxation, i.e.\ energy minimization,
@@ -487,7 +464,7 @@ compares to a BHO result of 59\% cut-and-splice and
 latter parameters were used for benchmark runs. In order to gauge the efficiency of
 the cluster regularization method on its own we further did EA runs
 using that method exclusively (i.e.\ having 100\% cluster
-regularization and 0\% cut-and-splice, and 0\% rattle mutation).
+regularization and 0\% cut-and-splice and 0\% rattle mutation).
 
 \begin{figure}[!hb]
     \centering
@@ -502,7 +479,7 @@ regularization and 0\% cut-and-splice, and 0\% rattle mutation).
 The three EA settings -- benchmark, all-cluster regularization, and
 combined -- were tested for two-, three-, and four-layer TiO$_2$
 systems. The results are presented in Fig.\  \ref{fig_success} which
-plot the accumulated success rates of 300, 300, and 600 restarts of the EA for the three system sizes, respectively. Note that
+plot the accumulated success rates of XX restarts of the EA. Note that
 the number of required attempts (measured on the $x$-axis) changes as
 the system size increases.
 
@@ -519,7 +496,7 @@ number of structures (essentially most of the population members).
 
 By resorting to the combined method, where the cluster regularization
 method is used with its optimum 70\% likelihood, the overall best
-performance is reached for all three system sizes (red curves). The
+performance is reached for all three systems (red curves). The
 combined method still exhibits a much sooner onset of finding the global energy
 minimum structure than the benchmark runs, and no signs of stagnation are seen.
 
