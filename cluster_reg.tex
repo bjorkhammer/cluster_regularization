@@ -489,13 +489,16 @@ the cluster regularization method on its own we further did EA runs
 using that method exclusively (i.e.\ having 100\% cluster
 regularization and 0\% cut-and-splice, and 0\% rattle mutation).
 
-\begin{figure}[!hb]
+\begin{figure}[!tb]
     \centering
     \includegraphics[width=1.0\columnwidth]{fig7-success.pdf}
-    \caption{Cumulative success rates for a) 2-layer, b) 3-layer, and c) 4-layer TiO$_2$ systems. Benchmark runs (yellow) use 59\% cut-and-splice and
-41\% rattle mutation. All-cluster runs ("Cluster reg.", orange) use 100\% cluster
-regularization mutation. Combined runs (red) use 70\% cluster regularization, 28\% cut-and-splice, and 2\%
-rattle mutation in the GA updates.}
+    \caption{Cumulative success rates for a) 2-layer, b) 3-layer, and
+      c) 4-layer TiO$_2$ systems. Benchmark runs (yellow) use 59\%
+      cut-and-splice and 41\% rattle mutation. All-cluster
+      regularization runs ("Cluster reg.", orange) use 100\% cluster
+      regularization mutation. Combined runs (red) use 70\% cluster
+      regularization, 28\% cut-and-splice, and 2\% rattle mutation in
+      the GA updates. The shaded regions indicate 95\% confidence intervals.}
     \label{fig_success}
 \end{figure}
 
@@ -525,6 +528,26 @@ method is used with its optimum 70\% likelihood, the overall best
 performance is reached for all three system sizes (red curves). The
 combined method still exhibits a much sooner onset of finding the global energy
 minimum structure than the benchmark runs, and no signs of stagnation are seen.
+
+It is interesting to compare the results across the three different
+system sizes.  First og all, it is seen that as the complexity of the
+problem increases from optimizing the positions within the 2-layer
+system (15 optimized atoms) to the 3-layer and 4-layer systems (27 and
+39 optimized atoms), the overall efficiency of the EA in its benchmark
+form goes down. After 1000 attempts, the benchmark method finds the
+global minimum in $\sim$80, $\sim$10, and $\sim$1 \% of the EA restarts. The
+longer runs with more attempts for the 3-layer and 4-layer systems
+bring the success rates up to $\sim$33 and $\sim$3 \% after 2000 and 4000
+attempts, respectively. Importantly, these levels are reached with
+either the all-cluster regularization method or the combined method
+after 5-600 and 1200-1500 attempts for the two sizes,
+respectively. This can be phrased as a more than three-fold
+speedup. We thus conclude that our new method shows great promise for
+accelerating global structure optimization. We do, however, also
+acknowledge that even with this improvement in speed, we are still
+facing challenges with the overall scaling of the search methods as
+system sizes are increased. The remedy of this important issue would
+involve the development of scalable search methods.
 
 
 \section{Summary}
