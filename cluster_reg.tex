@@ -78,19 +78,19 @@ Si adatoms and restatoms and zig-zagging Si-dimers do for example evolve at the
 Si(111)-(7$\times$7) and Si(001)-c(4$\times$2) surfaces,\cite{si7x7,si4x2} respectively, but
 are otherwise not present in bulk Si or bulk-truncated Si surfaces. Likewise,
 rutile and anatase TiO$_2$ single-crystal surfaces are known to exhibit
-reconstructions and ad-structures,\cite{rutile1,rutile2,anatase1} that have no equivalent in any TiO$_2$ bulk or surface systems.
+reconstructions and ad-structures,\cite{anatase1,rutile1,rutile2} that have no equivalent in any TiO$_2$ bulk or surface systems.
 
 Many strategies exist for performing global optimization in
 conjunction with model potentials or first-principles total energy
-frameworks. Among these, stoichastic methods such as random search\cite{XX} and
-basin hopping (BH)\cite{XX} are widely used and more advanced methods based on
-evolutionary algorithms (EA) are becoming increasingly popular.\cite{XX} Common
+frameworks. Among these, stoichastic methods such as random search\cite{pickard2011} and
+basin hopping (BH)\cite{wales1997} are widely used and more advanced methods based on
+evolutionary algorithms (EA) are becoming increasingly popular.\cite{johnston2003} Common
 to these methods is the need for the perturbative update steps
 followed by local relaxation and evaluation of whether or not to
 retain the new structure. The nature of the perturbation steps ranges
 from a mere rattling of the atomic positions to highly advanced
 cross-over operations in which the atomic structures of several known
-systems are combined.\cite{XX} The exploration of configuration space is
+systems are combined.\cite{ho1995} The exploration of configuration space is
 ensured by the very stochastic nature of these updates, yet updates
 that are too random will lead to rejection of the locally
 relaxed structure too often and hence cause slow convergence. The atomic
@@ -137,7 +137,7 @@ position is increased in the global optimization.
 
 \subsection{Density functional tight-binding theory}
 Density functional tight-binding (DFTB) theory calculations were
-performed for TiO$_2$ structures using parameters from ref \cite{Dolgonos2010}. Self-consistent charge DFTB calculations for TiO$_2$ systems have previously been conducted
+performed for TiO$_2$ structures using parameters from ref \cite{dolgonos2010}. Self-consistent charge DFTB calculations for TiO$_2$ systems have previously been conducted
 successfully in studies where either the system size or the number of calculations is too large for a full first principles density functional theory (DFT) study \cite{Selli2017a, Selli2017b}. In this study, we choose not to include the self-consistent charge correction in order to further increase the computation speed. The loss of accuracy in using DFTB over DFT is not of significant importance because our goal is to enhance global structure optimization, and not that of finding exact geometries. In the present work, we
 employ 2D periodic super cells accomodating the anatase TiO$_2$(001)
 surface with (4$\times$1) periodicity with lattice parameters $a=3.94$ {\AA} and $c=9.47$ {\AA}. Slabs of three different
@@ -179,7 +179,7 @@ The cluster regularization method proposed in this work is implemented
 as a mutation operation and its usefulness is gauged by comparing an
 EA search where this mutation is used either exclusively or
 occasionally to a benchmark EA search, where it is not used at all. We
-also test the method in a basin hopping (BH) framework,\cite{XX} in which some
+also test the method in a basin hopping (BH) framework,\cite{wales1997} in which some
 perturbing update step alternates with a local energy relaxation step.
 
 \subsection{Machine learning techniques}
@@ -202,10 +202,10 @@ structures may have a zero distance.
 
 A large and increasing number of feature vector formulations appear in
 the chemical physics literature. Global feature vectors of entire
-systems include the bag-of-bonds\cite{XX} and fingerprint\cite{XX} feature
+systems include the bag-of-bonds\cite{bag_of_bonds} and fingerprint\cite{finger_print} feature
 vectors, that are composed of either a sorted list or a histogram of
 all interatomic distances in the compounds, but also more
-sophisticated methods such as the Coulomb matrix\cite{XX} have been
+sophisticated methods such as the Coulomb matrix\cite{coulomb_matrix} have been
 proposed.
 
 Atom-specific feature vectors representing the local
@@ -213,7 +213,7 @@ chemical environments of the atoms in a compound structure are
 particularly abundant in the literature. Such feature vectors are usually
 formulated in internal coordinates and therefore have the translational
 and rotational invariance conveniently build in by construction. The Behler-Parrinello (BP)
-symmetry function formulation\cite{XX} stand out as a seminal
+symmetry function formulation\cite{behler_parrinello} stand out as a seminal
 contribution, yet one with rather many parameters to be chosen by the
 user. With BP symmetry functions, each atom is represented by a selection
 of 2-body distance terms and 3-body angular terms. All terms are
@@ -222,7 +222,7 @@ zero at a set cutoff distance.  Recently, more advanced atom-specific feature ve
 have been developed for which higher-order interactions (e.g.\ 4-atom torsion angles) are included.
 Such feature vectors have proven superior in reproducing energies,
 HOMO-LUMO gaps, polarizations, and a number of other properties for a
-diverse set of molecules.\cite{XX}
+diverse set of molecules.\cite{dihedral_representation}
 
 In the present work we adopt an exceedingly simple atom-specific
 feature vector with only three components:
@@ -233,7 +233,7 @@ where $Z_i$ is the atomic number of atom $i$, while
 $\rho_i^{Z^\mathrm{O}}$ and $\rho_i^{Z^\mathrm{Ti}}$ are measures for
 atom $i$ of the density of neighboring oxygen and titanium atoms,
 respectively. These densities are inspired by the radial symmetry
-functions of Behler \textit{et al.}\cite{XX}. For a discussion on this see the work of Botu
+functions of Behler \textit{et al.}\cite{behler_parrinello}. For a discussion on this see the work of Botu
 and Ramprasad \cite{Botu2015}. In our work we use:
 \begin{equation}
 \rho_i^Z = \sum_{j\ne i,Z_j=Z} e^{-r_{ij}/\lambda}g_c(r_{ij})  \label{eq1}
@@ -522,26 +522,32 @@ We acknowledge support from the Danish Council for Independent Research | Natura
 \bibitem{curtarolo2013} S.\ Curtarolo \textit{et al}., Nature Mater \textbf{12}, 191-201 (2013).
 \bibitem{hafner2006} J.\ Hafner, C.\ Wolverton, and G.\ Ceder, MRS Bulletin \textbf{31}, 659-668 (2006).
 \bibitem{si7x7}K.\ Takayanagi, Y.\ Tanishiro, S.\ Takahashi, and M.\ Takahashi, Surf.\ Sci.\ \textfbf{164}, 367 (1985).
-\bibitem{si4x2}
-\bibitem{rutile1}
-\bibitem{rutile2}
-\bibitem{anatase1}
-\bibitem{Starke1998} U. Starke \textit{et al}., Phys. Rev. Lett. \textbf{80}, 758 (1998).    
+\bibitem{si4x2}K.\ C.\ Low and C.\ K.\ Ong, Phys.\ Rev.\ B \textbf{50}, 5352-5357 (1994).
+\bibitem{anatase1}U.\ Diebold, Surf.\ Sci.\ Rep.\ \textbf{48}, 53-229 (2002).
+\bibitem{rutile1}X.\ Gong, N.\ Khorshidi, A.\ Stierle, V.\ Vonk, C.\ Ellinger, H.\ Dosch, H.\ Cheng, A.\ Selloni, Y.\ He, O.\ Dulub, U.\ Diebold, Surf.\ Sci.\ \textbf{603} 138-144 (2009).
+\bibitem{rutile2}R.\ Bechstein, H.\ H.\ Kristoffersen, L.\ B.\ Vilhelmsen, F.\ Rieboldt, J.\ Stausholm-M{\o}ller, S.\ Wendt, B.\ Hammer, and F.\ Besenbacher, Phys.\ Rev.\ Lett.\ \textbf{108}, 236103 (2012).
+\bibitem{pickard2011}  {Ab initio random structure searching} Chris J. Pickard and R. J. Needs. J. Phys.: Condens. Matter \textbf{23} (2011) 053201 (23pp) DOI:10.1088/0953-8984/23/5/053201
+\bibitem{wales1997}D.\ J.\ Wales, J.\ Phys.\ Chem.\ A \textbf{101}, 5111 (1997).
+\bibitem{johnston2003}R.\ L.\ Johnston, Dalton Trans.\ \textbf{22}, 4193 (2003).
+\bibitem{ho1995}D.\ M.\ Deaven and K.\ M.\ Ho, Phys.\ Rev.\ Lett.\ \textbf{75}, 288 (1995).
+\bibitem{dolgonos2010}G. Dolgonos, B. Aradi, N. H. Moreira, and T. Frauenheim, {An Improved Self-Consistent-Charge Density-Functional Tight-Binding (SCC-DFTB) Set of Parameters for Simulation of Bulk and Molecular Systems Involving Titanium}, J. Chem. Theory Comput. \textbf{6}, 266-278 (2010).
+\bibitem{Selli2017a}D. Selli, G. Fazio, G. Seifert, and C. D. Valentin, {Water Multilayers on TiO$_2$ (101) Anatase Surfaces: Assessment of a DFTB-Based Method}, J. Chem. Theory Comput. \textbf{13}, 3862-3873 (2017).
+\bibitem{Selli2017b}D. Selli, G. Fazio, and C. D. Valentin, {Modelling Realistic TiO$_2$ Nanospheres: A Benchmark Study of SCC-DFTB Against Hybrid DFT}, J. Chem. Phys. \textbf{147}, 164701 (2017).
+\bibitem{ase2}A.\ H.\ Larsen \textit{et al.}, J. Phys. Condens. Matter 2017, 29, 273002.
+\bibitem{Vilhelmsen2012}L. B. Vilhelmsen and B. Hammer, Phys. Rev. Lett. \textbf{108}, 126101 (2012).
+\bibitem{Vilhelmsen2014}L. B.\ Vilhelmsen and B.\ Hammer, J. Chem. Phys. \textbf{141}, 044711 (2014).
+\bibitem{Bartok2013} A.\ P.\ Bartok, R.\ Kondor, and G.\ Csanyi, Phys.\ Rev.\ B \textbf{87}, 184114 (2013).
+\bibitem{bag_of_bonds}
+\bibitem{finger_print}
+\bibitem{coulomb_matrix}
+\bibitem{behler_parrinello}
+\bibitem{dihedral_representation}
+\bibitem{Botu2015} {Adaptive Machine Learning Framework to Accelerate Ab Initio Molecular Dynamics.} V. Botu and R. Ramprasad, Int. J. Quantum Chem. 2015, 115 ,1075-18083. DOI:10.1002/qua.24836    
 \bibitem{Gilbert2006} K. M. Gilbert and C. A. Venanzi, {Hierarchical Clustering Analysis of Flexible GBR 12909 Dialkyl Piperazine and Piperidine Analogs}, J. Comput. Aided Mol. Des. \textbf{20}, 209-225 (2006).  
 \bibitem{Duan2010} L. L. Duan, Y. Mei, D. Zhang, Q. G. Zhang, and J. Z. H. Zhang, {Folding of a Helix at Room Temperature is Critically Aided by Electrostatic Polarization of Intraprotein Hydrogen Bonds}, J. Am. Chem. Soc. \textbf{132}, 11159-11164 (2010).
 \bibitem{Chema2003} D. Chema and A. Goldblum, {The "Nearest Single Neighbor" Method -- Finding Families of Conformations within a Sample}, J. Chem. Inf. Comput. Sci. \textbf{43}, 208-217 (2003). 
 \bibitem{Jorgensen2017} M. S. J{\o}rgensen, M. N. Groves, B. Hammer, {Combining Evolutionary Algorithms with Clustering toward Rational Global Structure Optimization at the Atomic Scale}, J. Chem. Theory Comput. \textbf{13}, 1486-1493 (2017). 
 \bibitem{Malay2009} {A Modified k-means Algorithm to Avoid Empty Clusters} Malay K. Pakhira, International Journal of Recent Trends in Engineering, Vol 1, No 1, May 2009
-\bibitem{Pikard2011}  {Ab initio random structure searching} Chris J. Pickard and R. J. Needs. J. Phys.: Condens. Matter \textbf{23} (2011) 053201 (23pp) DOI:10.1088/0953-8984/23/5/053201
-\bibitem{Botu2015} {Adaptive Machine Learning Framework to Accelerate Ab Initio Molecular Dynamics.} V. Botu and R. Ramprasad, Int. J. Quantum Chem. 2015, 115 ,1075-18083. DOI:10.1002/qua.24836    
-\bibitem{Chen2017} {Understanding atomic chemistry with machine learning.} Chen, X., Jørgensen, M. S., Hammer, B., \& Li, J. (2017) Unpublished
-\bibitem{Vilhelmsen2012}L. B. Vilhelmsen and B. Hammer, Phys. Rev. Lett. \textbf{108}, 126101 (2012).
-\bibitem{Vilhelmsen2014}L. B.\ Vilhelmsen and B.\ Hammer, J. Chem. Phys. \textbf{141}, 044711 (2014).
-\bibitem{Dolgonos2010}G. Dolgonos, B. Aradi, N. H. Moreira, and T. Frauenheim, {An Improved Self-Consistent-Charge Density-Functional Tight-Binding (SCC-DFTB) Set of Parameters for Simulation of Bulk and Molecular Systems Involving Titanium}, J. Chem. Theory Comput. \textbf{6}, 266-278 (2010).
-\bibitem{Selli2017a}D. Selli, G. Fazio, G. Seifert, and C. D. Valentin, {Water Multilayers on TiO$_2$ (101) Anatase Surfaces: Assessment of a DFTB-Based Method}, J. Chem. Theory Comput. \textbf{13}, 3862-3873 (2017).
-\bibitem{Selli2017b}D. Selli, G. Fazio, and C. D. Valentin, {Modelling Realistic TiO$_2$ Nanospheres: A Benchmark Study of SCC-DFTB Against Hybrid DFT}, J. Chem. Phys. \textbf{147}, 164701 (2017).
-\bibitem{ase2}A.\ H.\ Larsen \textit{et al.}, J. Phys. Condens. Matter 2017, 29, 273002.
-\bibitem{Bartok2013} A.\ P.\ Bartok, R.\ Kondor, and G.\ Csanyi, Phys.\ Rev.\ B \textbf{87}, 184114 (2013).
 \end{thebibliography}
 
 
