@@ -64,33 +64,33 @@ the overall performance of the global optimization.
 In computational materials science, knowing the atomic structure of a
 given molecule, atomic cluster or solid compound is a prerequisite for
 further prediction of electronic and thermodynamic properties of such
-a substance.\cite{} In the emerging fields of combinatorial chemistry and
-high-throughput computational screening of materials,\cite{} the use of local
+a substance. In the emerging fields of combinatorial chemistry and
+high-throughput computational screening of materials,\cite{curtarolo2013} the use of local
 relaxation of probed structures is often sufficient since libraries of
 molecular building blocks and crystal structures can be used to direct
-the starting points for the searches.\cite{} However, many problems exist for
+the starting points for the searches.\cite{hafner2006} However, many problems exist for
 which the structural motifs in the sought-after structures have no
 analogues in known structures, and where global optimization must be
 employed. A prominent example of this is that of surface relaxations,
 which often exhibit structural motifs that are unique to a chemical
 composition, crystaline polymorph, and surface orientation. Monomeric
 Si adatoms and restatoms and zig-zagging Si-dimers do for example evolve at the
-Si(111)-(7$\times$7) and Si(001)-c(4$\times$2) surfaces,\cite{} respectively, but
+Si(111)-(7$\times$7) and Si(001)-c(4$\times$2) surfaces,\cite{si7x7,si4x2} respectively, but
 are otherwise not present in bulk Si or bulk-truncated Si surfaces. Likewise,
 rutile and anatase TiO$_2$ single-crystal surfaces are known to exhibit
-reconstructions and ad-structures,\cite{} that have no equivalent in any TiO$_2$ bulk or surface systems.
+reconstructions and ad-structures,\cite{rutile1,rutile2,anatase1} that have no equivalent in any TiO$_2$ bulk or surface systems.
 
 Many strategies exist for performing global optimization in
 conjunction with model potentials or first-principles total energy
-frameworks. Among these, stoichastic methods such as random search\cite{} and
-basin hopping (BH)\cite{} are widely used and more advanced methods based on
-evolutionary algorithms (EA) are becoming increasingly popular.\cite{} Common
+frameworks. Among these, stoichastic methods such as random search\cite{XX} and
+basin hopping (BH)\cite{XX} are widely used and more advanced methods based on
+evolutionary algorithms (EA) are becoming increasingly popular.\cite{XX} Common
 to these methods is the need for the perturbative update steps
 followed by local relaxation and evaluation of whether or not to
 retain the new structure. The nature of the perturbation steps ranges
 from a mere rattling of the atomic positions to highly advanced
 cross-over operations in which the atomic structures of several known
-systems are combined.\cite{} The exploration of configuration space is
+systems are combined.\cite{XX} The exploration of configuration space is
 ensured by the very stochastic nature of these updates, yet updates
 that are too random will lead to rejection of the locally
 relaxed structure too often and hence cause slow convergence. The atomic
@@ -179,7 +179,7 @@ The cluster regularization method proposed in this work is implemented
 as a mutation operation and its usefulness is gauged by comparing an
 EA search where this mutation is used either exclusively or
 occasionally to a benchmark EA search, where it is not used at all. We
-also test the method in a basin hopping (BH) framework,\cite{} in which some
+also test the method in a basin hopping (BH) framework,\cite{XX} in which some
 perturbing update step alternates with a local energy relaxation step.
 
 \subsection{Machine learning techniques}
@@ -191,7 +191,7 @@ classification of the data utilizing clustering methods.
 Feature vector representations of the atomic structure of molecules,
 clusters, and solids serve the general purpose of introducing
 invariance with respect to symmetries obeyed by the total energy
-operator, i.e.\ the Hamiltonian. The symmetries are those of translation
+operator, i.e.\ the Hamiltonian.\cite{Bartok2013} The symmetries are those of translation
 or rotation of the entire system or the permutation of the order of
 atoms with the same chemical identity. Without a symmetry invariant
 representation, e.g.\ using cartesian coordinates, a certain structure
@@ -202,10 +202,10 @@ structures may have a zero distance.
 
 A large and increasing number of feature vector formulations appear in
 the chemical physics literature. Global feature vectors of entire
-systems include the bag-of-bonds\cite{} and fingerprint\cite{} feature
+systems include the bag-of-bonds\cite{XX} and fingerprint\cite{XX} feature
 vectors, that are composed of either a sorted list or a histogram of
 all interatomic distances in the compounds, but also more
-sophisticated methods such as the Coulomb matrix\cite{} have been
+sophisticated methods such as the Coulomb matrix\cite{XX} have been
 proposed.
 
 Atom-specific feature vectors representing the local
@@ -213,7 +213,7 @@ chemical environments of the atoms in a compound structure are
 particularly abundant in the literature. Such feature vectors are usually
 formulated in internal coordinates and therefore have the translational
 and rotational invariance conveniently build in by construction. The Behler-Parrinello (BP)
-symmetry function formulation\cite{} stand out as a seminal
+symmetry function formulation\cite{XX} stand out as a seminal
 contribution, yet one with rather many parameters to be chosen by the
 user. With BP symmetry functions, each atom is represented by a selection
 of 2-body distance terms and 3-body angular terms. All terms are
@@ -222,7 +222,7 @@ zero at a set cutoff distance.  Recently, more advanced atom-specific feature ve
 have been developed for which higher-order interactions (e.g.\ 4-atom torsion angles) are included.
 Such feature vectors have proven superior in reproducing energies,
 HOMO-LUMO gaps, polarizations, and a number of other properties for a
-diverse set of molecules.\cite{}
+diverse set of molecules.\cite{XX}
 
 In the present work we adopt an exceedingly simple atom-specific
 feature vector with only three components:
@@ -233,7 +233,7 @@ where $Z_i$ is the atomic number of atom $i$, while
 $\rho_i^{Z^\mathrm{O}}$ and $\rho_i^{Z^\mathrm{Ti}}$ are measures for
 atom $i$ of the density of neighboring oxygen and titanium atoms,
 respectively. These densities are inspired by the radial symmetry
-functions of Behler \textit{et al.}\cite{}. For a discussion on this see the work of Botu
+functions of Behler \textit{et al.}\cite{XX}. For a discussion on this see the work of Botu
 and Ramprasad \cite{Botu2015}. In our work we use:
 \begin{equation}
 \rho_i^Z = \sum_{j\ne i,Z_j=Z} e^{-r_{ij}/\lambda}g_c(r_{ij})  \label{eq1}
@@ -519,6 +519,13 @@ reconstruction for three different system sizes.
 We acknowledge support from the Danish Council for Independent Research | Natural Science (grant no. 0602-02566B) and from VILLUM FONDEN (Investigator grant, project no. 16562).
 
 \begin{thebibliography}{12}  
+\bibitem{curtarolo2013} S.\ Curtarolo \textit{et al}., Nature Mater \textbf{12}, 191-201 (2013).
+\bibitem{hafner2006} J.\ Hafner, C.\ Wolverton, and G.\ Ceder, MRS Bulletin \textbf{31}, 659-668 (2006).
+\bibitem{si7x7}K.\ Takayanagi, Y.\ Tanishiro, S.\ Takahashi, and M.\ Takahashi, Surf.\ Sci.\ \textfbf{164}, 367 (1985).
+\bibitem{si4x2}
+\bibitem{rutile1}
+\bibitem{rutile2}
+\bibitem{anatase1}
 \bibitem{Starke1998} U. Starke \textit{et al}., Phys. Rev. Lett. \textbf{80}, 758 (1998).    
 \bibitem{Gilbert2006} K. M. Gilbert and C. A. Venanzi, {Hierarchical Clustering Analysis of Flexible GBR 12909 Dialkyl Piperazine and Piperidine Analogs}, J. Comput. Aided Mol. Des. \textbf{20}, 209-225 (2006).  
 \bibitem{Duan2010} L. L. Duan, Y. Mei, D. Zhang, Q. G. Zhang, and J. Z. H. Zhang, {Folding of a Helix at Room Temperature is Critically Aided by Electrostatic Polarization of Intraprotein Hydrogen Bonds}, J. Am. Chem. Soc. \textbf{132}, 11159-11164 (2010).
@@ -534,6 +541,7 @@ We acknowledge support from the Danish Council for Independent Research | Natura
 \bibitem{Selli2017a}D. Selli, G. Fazio, G. Seifert, and C. D. Valentin, {Water Multilayers on TiO$_2$ (101) Anatase Surfaces: Assessment of a DFTB-Based Method}, J. Chem. Theory Comput. \textbf{13}, 3862-3873 (2017).
 \bibitem{Selli2017b}D. Selli, G. Fazio, and C. D. Valentin, {Modelling Realistic TiO$_2$ Nanospheres: A Benchmark Study of SCC-DFTB Against Hybrid DFT}, J. Chem. Phys. \textbf{147}, 164701 (2017).
 \bibitem{ase2}A.\ H.\ Larsen \textit{et al.}, J. Phys. Condens. Matter 2017, 29, 273002.
+\bibitem{Bartok2013} A.\ P.\ Bartok, R.\ Kondor, and G.\ Csanyi, Phys.\ Rev.\ B \textbf{87}, 184114 (2013).
 \end{thebibliography}
 
 
