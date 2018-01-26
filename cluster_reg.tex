@@ -142,7 +142,7 @@ successfully in studies where either the system size or the number of calculatio
 employ 2D periodic super cells accomodating the anatase TiO$_2$(001)
 surface with (1$\times$4) periodicity with lattice parameters $a=3.94$ {\AA} and $c=9.47$ {\AA}. Slabs of three different
 thicknesses were considered, containing two, three, or four layers of
-atoms. The three-layer system is illustrated in Figure \ref{figintro},
+atoms. The three-layer system is illustrated in Fig.\  \ref{figintro},
 showing the template of four static TiO$_2$ units, examples of
 two disordered and one ordered structure with nine extra TiO$_2$ units added, the latter being the
 global minimum energy structure with three well ordered atomic layers
@@ -293,13 +293,13 @@ landscape. The initial factor $\frac{1}{2}$ originates from the double sums over
 
 Owing to its low dimensionality, the atom-specific feature vector can
 be illustrated in two-dimensional scatter plots. This is done in
-Figures \ref{fig_global} and \ref{fig_feature} where features
+Figs.\  \ref{fig_global} and \ref{fig_feature} where features
 pertaining to oxygen and titanium atoms are shown in red and grey
 color, respectively.  The two axes in the plots are the
 $\rho^{Z^\mathrm{O}}$ and $\rho^{Z^\mathrm{Ti}}$ densities.  In
-Figure \ref{fig_global}, the atomic structure considered is that of the
+Fig.\  \ref{fig_global}, the atomic structure considered is that of the
 three-layer global minimum energy structure introduced in
-Figure \ref{figintro}d. The figure shows that strong correlations exist
+Fig.\  \ref{figintro}d. The figure shows that strong correlations exist
 for the features. Features for oxygen atoms lie on one line, while
 features for titanium atoms lie on another. Within each line the 26
 data points for oxygen atoms and 13 data points for titanium atoms
@@ -343,7 +343,7 @@ structure present in the disordered structures. The feature vector is
 clearly not unique as for example an atom with a single close neighbor may have the
 same feature vector as an atom with two more distant neighbors. However, in the
 current context, this is not of importance, since the rich variety in feature
-vectors over a real data set as seen in Figure \ref{fig_feature} is the
+vectors over a real data set as seen in Fig.\  \ref{fig_feature} is the
 desired property.
 
 \begin{figure}[tb]
@@ -357,23 +357,23 @@ A strong correlation between the total
 cluster distance, $D_S$, and the total DFTB energy,
 $E_S^\mathrm{DFTB}$, is revealed when
 clustering of the atomic feature vectors presented in
-Figure \ref{fig_feature} is performed. The correlation illustrated in
-Figure \ref{fig_corr} may in part be explained by the
+Fig.\  \ref{fig_feature} is performed. The correlation illustrated in
+Fig.\  \ref{fig_corr} may in part be explained by the
 general observation that nature often favors high
-symmetry\cite{Pikard2011}, i.e.\ structures with low energy often have
+symmetry\cite{pickard2011}, i.e.\ structures with low energy often have
 recurring atomic motifs. A single crystal is an obvious example of
 this, since all the atoms assume the same local
 environments. In fact, for bulk anatase TiO$_2$, the scatter plot similar to
-Figures \ref{fig_global} and \ref{fig_feature} only contains just one point
+Figs.\  \ref{fig_global} and \ref{fig_feature} only contains just one point
 for each of the two chemical elements, oxygen and titanium. Hence, with
 two cluster centers, the total cluster distance for bulk anatase TiO$_2$ would be zero. In our
 case, the slab geometry used is causing the presence of two surfaces
 that act to give several possible motifs, as evidenced for the global
-minimum energy structure by Figure \ref{fig_global}, where now the total cluster
+minimum energy structure by Fig.\  \ref{fig_global}, where now the total cluster
 distance becomes finite, reflecting the surface energy cost. For any
 disordered slab structure, the feature vectors scatter even more and the cluster distance increases
 further at the same time as the total energy of the structure
-raises above that of the global minimum energy structure (Figure \ref{fig_corr}).
+raises above that of the global minimum energy structure (Fig.\  \ref{fig_corr}).
 
 \section{Cluster regularization method}
 
@@ -394,10 +394,10 @@ regularization takes place as a gradient based optimization using
 standard techniques. There is no guarantee or even expectation that the
 cluster regularization will directly perturb a given structure towards
 a lower energy structure, but the cluster distance-energy correlation
-in Figure\ \ref{fig_corr} is suggestive that when moved according to (minus) the cluster distance gradient, a given structure may leave a meta-stable basin
+in Fig.\ \ \ref{fig_corr} is suggestive that when moved according to (minus) the cluster distance gradient, a given structure may leave a meta-stable basin
 region of the energy landscape and move into a more favorable
 basin in the energy landscape. The principle of the method is illustrated
-schematically in Figure \ref{fig_schem}a, where transformations between real space and feature space enables the structure to escape local minima. Note that a local minimum in real space is only escaped if the local minimum in feature space takes the structure to another energy basin in real space. If this is not the case, the optimization will enter an equilibrium state between real space and feature space, and thus the structure will become trapped in one or more energy basins (Figures \ref{fig_schem}b and c). In the following, we demonstrate the usefulness of
+schematically in Fig.\  \ref{fig_schem}a, where transformations between real space and feature space enables the structure to escape local minima. Note that a local minimum in real space is only escaped if the local minimum in feature space takes the structure to another energy basin in real space. If this is not the case, the optimization will enter an equilibrium state between real space and feature space, and thus the structure will become trapped in one or more energy basins (Figs.\  \ref{fig_schem}b and c). In the following, we demonstrate the usefulness of
 the method in two different setups,
 either as the perturbation step in a basin hopping (BH) framework or as a
 possible perturbation step in an evolutionary search.
@@ -426,10 +426,10 @@ local energy minima, thereby gaining about 0.5 eV/atom over the course of
 25 updates. Figure \ref{fig_min}c combines the two measures, cluster
 distance and energy, giving an overview of how the structure
 develops. We observe (not shown) that many BH runs end up in the dynamic
-equilibrium illustrated in Figure \ref{fig_schem}b. However, occasionally, the BH runs succeed in
+equilibrium illustrated in Fig.\  \ref{fig_schem}b. However, occasionally, the BH runs succeed in
 identifying the global energy minimum structure, as illustrated with
 the penultimate and ultimate optimization steps of such BH runs in
-Figures \ref{fig_min}e-f.
+Figs.\  \ref{fig_min}e-f.
 
 \subsubsection{Mutation in EA}
 The cluster regularization method lends itself particularly well for
@@ -448,7 +448,7 @@ We introduced the cluster regularization as an EA mutation in the following way:
 \end{enumerate}
 When the mutation returns the child, the EA will make an energy
 relaxation and we have a cycle similar to that of the BH setup
-illustrated in Figure \ref{fig_min}. However, for the EA cycle, the
+illustrated in Fig.\  \ref{fig_min}. However, for the EA cycle, the
 random drawing of parents will ensure a more stochastic nature of the
 search.
 
@@ -478,7 +478,7 @@ regularization and 0\% cut-and-splice and 0\% rattle mutation).
 
 The three EA settings -- benchmark, all-cluster regularization, and
 combined -- were tested for two-, three-, and four-layer TiO$_2$
-systems. The results are presented in Figure \ref{fig_success} which
+systems. The results are presented in Fig.\  \ref{fig_success} which
 plot the accumulated success rates of XX restarts of the EA. Note that
 the number of required attempts (measured on the $x$-axis) changes as
 the system size increases.
