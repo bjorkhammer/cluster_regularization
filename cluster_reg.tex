@@ -466,8 +466,8 @@ We introduced the cluster regularization as an EA mutation in the following way:
 \item Draw randomly $N_\mathrm{par}$ parents from the population.
 \item Calculate atomic features for all parents.
 \item Cluster them and find cluster centers.
-\item Minimize the cluster distance of the lowest energy parent
-\item Return the resulting structure (the child)
+\item Minimize the cluster distance of the lowest energy parent.
+\item Return the resulting structure (the child).
 \end{enumerate}
 When the mutation returns the child, the EA will make an energy
 relaxation and we have a cycle similar to that of the BH setup
@@ -487,7 +487,7 @@ compares to a BHO result of 59\% cut-and-splice and
 latter parameters were used for benchmark runs. In order to gauge the efficiency of
 the cluster regularization method on its own we further did EA runs
 using that method exclusively (i.e.\ having 100\% cluster
-regularization and 0\% cut-and-splice and 0\% rattle mutation).
+regularization and 0\% cut-and-splice, and 0\% rattle mutation).
 
 \begin{figure}[!hb]
     \centering
@@ -502,7 +502,7 @@ regularization and 0\% cut-and-splice and 0\% rattle mutation).
 The three EA settings -- benchmark, all-cluster regularization, and
 combined -- were tested for two-, three-, and four-layer TiO$_2$
 systems. The results are presented in Fig.\  \ref{fig_success} which
-plot the accumulated success rates of XX restarts of the EA. Note that
+plot the accumulated success rates of 300, 300, and 600 restarts of the EA for the three system sizes, respectively. Note that
 the number of required attempts (measured on the $x$-axis) changes as
 the system size increases.
 
@@ -519,7 +519,7 @@ number of structures (essentially most of the population members).
 
 By resorting to the combined method, where the cluster regularization
 method is used with its optimum 70\% likelihood, the overall best
-performance is reached for all three systems (red curves). The
+performance is reached for all three system sizes (red curves). The
 combined method still exhibits a much sooner onset of finding the global energy
 minimum structure than the benchmark runs, and no signs of stagnation are seen.
 
