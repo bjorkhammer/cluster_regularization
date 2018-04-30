@@ -143,7 +143,7 @@ not to find exact geometries, but  to enhance global structure optimization inde
 used to calculate the energy of the system.
 In the present work, we
 employ 2D periodic super cells accomodating the anatase TiO$_2$(001)
-surface with (1$\times$4) periodicity with lattice parameters $a=3.94$ {\AA} and $c=9.47$ {\AA}. 2$\times$1 \textbf{k}-point are used to sample the Brillouin zon.
+surface with (1$\times$4) periodicity with lattice parameters $a=3.94$ {\AA} and $c=9.47$ {\AA}. A mesh of 2$\times$1 \textbf{k}-points is used to sample the Brillouin zone.
 Slabs of three different
 thicknesses were considered, containing two, three, or four layers of
 atoms. The three-layer system is illustrated in Fig.\  \ref{figintro},
@@ -156,7 +156,7 @@ and one extra row of TiO$_2$ protruding out of the surface \cite{anatase2}.
     \includegraphics[width=1.0\columnwidth]{fig1-intro.pdf}
     \caption{Side views of computational cells with Ti$_{n}$O$_{2n}$ structures.
       Small red spheres: Oxygen, large grey spheres: Ti.
-      a) The template of four TiO$_2$ units.
+      a) The static template of four TiO$_2$ units.
       b-c) Two examples of intermediate structures from an evolutionary search. Nine TiO$_2$ units
       have been placed on the template.
       d) The sought-after "3-layer" global minimum structure for the anatase TiO$_2$(001)-(1$\times$4) surface.
@@ -184,8 +184,8 @@ The cluster regularization method proposed in this work is implemented
 as a cross-over operation and its usefulness is gauged by comparing an
 EA search where this operation is used either exclusively or
 occasionally to a benchmark EA search, where it is not used at all. We
-also test the method in a basin hopping (BH) framework,\cite{wales1997} in which some
-perturbing update step alternates with a local energy relaxation step.
+also test the method in a basin hopping (BH) framework,\cite{wales1997} in which it serves as a
+perturbing update step that alternates with an energy relaxation step.
 
 \subsection{Machine learning techniques}
 Machine learning techniques are becoming popular tools for various tasks in chemical physics.\cite{Rupp2012,Bartok2013,Hansen2013,Li2015,Botu2015,Khorshidi2016,Alexandrova2016,Schutt2017,Parkhill2017,Patra2017} Our method uses two machine learning techniques:
@@ -260,10 +260,10 @@ g_c(r)=
 which ensures that the densities vanish algebraically at the cut-off
 radius, $r_c$. For $r_c$ we use 11.9 {\AA} which was determined in a parameter search detailed below.
 When used with periodic boundary conditions as in the present work, it is important that the
-the sum in Eq.\ (\ref{eq1}) runs over all replicas of given atoms in neighboring unit cells that are within the cut-off.
+sum in Eq.\ (\ref{eq1}) runs over all replicas of given atoms in neighboring unit cells that are within the cut-off.
 
 \subsubsection{Clustering}
-Molecular and chemical physicists are often faced with vast configuration spaces when studying the structures of chemical compounds. Clustering techniques have proven valuable tools when trying to find reoccurring structural moieties \cite{Gilbert2006}, especially in combination with molecular dynamics where thousands of structure trajectories are generated \cite{Duan2010,Chema2003}. Clustering has also previously been used to aid global structure optimization \cite{Jorgensen2017}.
+Molecular and chemical physicists are often faced with vast configuration spaces when studying the structures of chemical compounds. Clustering techniques have proven valuable tools when trying to find recurring structural moieties \cite{Gilbert2006}, especially in combination with molecular dynamics where thousands of structure trajectories are generated \cite{Duan2010,Chema2003}. Clustering has also previously been used to aid global structure optimization \cite{Jorgensen2017}.
 
 The clustering is done in feature space. Given $N_S$ different
 structures, each having $N$ atoms, the $N_SN$ different feature
@@ -335,7 +335,7 @@ ratio of neighboring atoms of the two possible types.
     \centering
     \includegraphics[width=1.0\columnwidth]{fig3-scatterplot.pdf}
     \caption{Visualization of atoms from 1019 Ti$_{13}$O$_{26}$ structures in feature space. Each structure contributes $N=39$ separate spots that are colored as in Fig.\ \protect\ref{fig_global}. Every vector is
-marked with a transparent symbol. In regions with many vectors, the symbols add up to a darker contrast. Crosses indicate cluster centers used in conjunction with Fig.\ \protect\ref{fig_corr}.}
+marked with a transparent symbol. In regions with many vectors, the symbols add up to a darker contrast.}
     \label{fig_feature}
 \end{figure}
 
@@ -345,7 +345,7 @@ three-layer system. The structures are taken from several EA searches
 and have been filtered so that they can be considered distinct
 structures. The wide distribution of the feature vectors for general
 structures as opposed to the highly ordered features for the global
-minimum energy structure indicate that despite its simplicity the
+minimum energy structure indicates that despite its simplicity the
 feature vector holds great potential to capture variations in local
 structure present in the disordered structures. The feature vector is
 clearly not unique as for example an atom with a single close neighbor may have the
@@ -358,7 +358,13 @@ desired property.
     \centering
     \includegraphics[width=1.0\columnwidth]{fig4-correlation.pdf}
     \caption{Correlation of energy (in eV/atom) with cluster distance according to Eq.\ (4). Each dot represents one of the $N_S=1019$ structures that form
-the basis for Fig.\ \protect\ref{fig_feature}. The $N_c=5$ cluster centers used in Eq.\ (4) are indicated as crosses in Fig.\ 3 on top of the atomic feature vectors from which they were derived.}
+the basis for Fig.\ \protect\ref{fig_feature}. The $N_c=5$ cluster centers used in Eq.\ (4) were:
+$( 22,0.89, 0.19)$,
+$( 22,0.53, 0.14)$,
+$( 8 ,0.62, 0.44)$,
+$( 8 ,0.46, 0.38)$, and
+$( 8 ,0.31, 0.27)$.
+}
     \label{fig_corr}
 \end{figure}
 
@@ -389,7 +395,7 @@ rises above that of the global minimum energy structure (Fig.\  \ref{fig_corr}).
 \begin{figure}[tb]
     \centering
     \includegraphics[width=1.0\columnwidth]{fig5-schematic.pdf}
-    \caption{a) Structure optimization via alternation between minimization in real space and feature space. b+c) Situations where the structure is stuck in one or more real space local minima due to an equilibrium between minima in real space and feature space.}
+    \caption{a) Structure optimization via alternation between minimization in real space and feature space. b+c) Situations where the structure is stuck in one or more real space local minima due to a dynamic equilibrium between relaxations in real space and feature space.}
     \label{fig_schem}
 \end{figure}
 
@@ -403,7 +409,7 @@ regularization takes place as a gradient based optimization using
 standard techniques. There is no guarantee or even expectation that the
 cluster regularization will directly perturb a given structure towards
 a lower energy structure, but the cluster distance-energy correlation
-in Fig.\ \ref{fig_corr} is suggestive that when moved according to (minus) the cluster distance gradient, a given structure may leave a meta-stable basin
+in Fig.\ \ref{fig_corr} is suggestive that when moved according to (minus) the cluster distance gradient, Eq.\ (\ref{eq_deriv}), a given structure may leave a meta-stable basin
 region of the energy landscape and move into a more favorable
 basin in the energy landscape.
 
@@ -431,8 +437,8 @@ operation in an evolutionary search.
       updates. Red lines and arrows indicate cluster distance
       minimization steps, while blue lines and arrows indicate energy
       relaxations. a-c) Data for the same 25 iterations in one basin
-      hopping run. d) Structural illustrations for 10 selected
-      iterations from the same run. The progress in the individual
+      hopping run. d) Structural illustrations of 10 selected
+      states from the same run. The progress in the individual
       minimization steps is small and sometimes hard to
       appreciate. However, from state 16 to 17 the cluster
       regularization acts to fill the vacancy in the second layer and
@@ -467,8 +473,8 @@ Figs.\  \ref{fig_min}e-f.
 
 \subsubsection{Cross-over operation in EA}
 The cluster regularization method lends itself particularly well for
-use as a cross-over operation in connection with an evolutionary algorithm (EA). It can
-serve in a manner similar to that in a basin hopping setup, but owing
+use as a cross-over operation in connection with an evolutionary algorithm (EA). It 
+serves in a manner similar to that in a basin hopping setup, but owing
 to the stochastic elements in the EA, the risk of being trapped in a
 dynamic equilibrium is largely reduced.
 
@@ -477,11 +483,11 @@ We introduced the cluster regularization as an EA cross-over operation in the fo
 \item Draw randomly $N_\mathrm{par}$ parents from the population.
 \item Calculate atomic features for all parents.
 \item Cluster them and find cluster centers.
-\item Minimize the cluster distance of the lowest energy parent.
+\item Minimize the cluster distance for the lowest energy parent.
 \item Return the resulting structure (the child).
 \end{enumerate}
 Note that when used with $N_{par}=1$, the method reduces to a mutation operation.
-When the cross-over operation returns the child, the EA will make an energy
+When the method returns the child, the EA will make an energy
 relaxation and we have a cycle similar to that of the BH setup
 illustrated in Fig.\  \ref{fig_min}. However, for the EA cycle, the
 random drawing of parents will ensure a more stochastic nature of the
@@ -546,7 +552,7 @@ minimum structure than the benchmark runs, and a small degree of stagnation is s
 It is interesting to compare the results across the three different
 system sizes.  First of all, it is seen that as the complexity of the
 problem increases from optimizing the positions within the 2-layer
-system (15 optimized atoms) to the 3-layer and 4-layer systems (27 and
+system (12 static + 15 optimized atoms) to the 3-layer and 4-layer systems (12 static + 27 and
 39 optimized atoms), the overall efficiency of the EA in its benchmark
 form goes down. After 1000 attempts, the benchmark method finds the
 global minimum in $\sim$80, $\sim$10, and $\sim$1 \% of the EA restarts. The
